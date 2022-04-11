@@ -1,0 +1,81 @@
+.dropdown:hover .dropdown-menu{
+    display : block;
+}
+
+.bg-light-blue{
+    background-color: rgb(196, 225, 248);
+}
+
+.font-blue{
+    color: rgb(26, 138, 230);
+}
+
+.stock-bg{
+    background-image: url("../image/homeBG1.jpg");
+    background-size: cover;
+}
+
+
+/* register page css */
+.gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #84fab0;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+  }
+  .gradient-custom-4 {
+    /* fallback for old browsers */
+    background: #84fab0;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+  }
+
+
+
+.form-group {
+    display: flex; 
+    flex-direction: row; 
+    margin: 0.5em;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.form-group button{
+    background-color: white;
+    color: rgb(26, 138, 230);
+    border: none;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    padding: 1em;
+}
+
+.form-group input{
+    display: flex;
+    padding: 0.752em;
+    font-size: large;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    border: none;
+}
+
+.form-group input:focus{
+  box-shadow: none;
+}
+
+.form-group input::placeholder{
+    color: rgb(177, 185, 192);
+}
+
+#logOption{
+    color: black;
+    text-decoration: none;
+}
+
