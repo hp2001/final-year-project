@@ -1,1 +1,2 @@
 just trying to access static folder via internet.
+install: pip install django-crispy-form

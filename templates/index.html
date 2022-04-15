@@ -1,4 +1,14 @@
 {% extends 'base.html' %} {% block body %}
+
+            <div id="user-info">
+              <span class="hello-msg">Hello, {{request.user}}</span> 
+              <!-- Button trigger modal -->
+              <button type="button" id="logOption" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                <a href="{% url 'logout' %}">Logout</a>
+              </button>
+            </div>
+
 <div class="container">
   <div>
     <h1 class="text-center" style="margin-top: 12vh">Stock Engine</h1>

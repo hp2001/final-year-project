@@ -79,3 +79,14 @@
     text-decoration: none;
 }
 
+.hello-msg{
+    font-size: 20px;
+    color: rgb(53, 4, 95);
+    margin-right: 5px;
+}
+
+#user-info{
+    position: absolute;
+    top: 10%;
+    right: 0;
+}
