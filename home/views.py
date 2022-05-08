@@ -16,6 +16,10 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required(login_url='login')
+def stockDetails(request):
+    return render(request,'stockDetails.html')
+
 def tcs(request):
     context = {
         'companyName': "TCS"
