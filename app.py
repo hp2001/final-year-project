@@ -9,7 +9,7 @@ import streamlit as st
 start = '2010-01-01'
 end = '2019-12-31'
 
-st.title('Stock Prediction System')
+# st.title('Stock Prediction System')
 
 user_input = st.text_input('Enter Stock Ticker', 'TCS.NS')
 df = data.DataReader(user_input, 'yahoo', start, end)
