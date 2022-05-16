@@ -48,10 +48,10 @@
             <a class="nav-link mx-2 fs-5 fst-bold" id="home" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fs-5 fst-bold" id="about" href="/about">About</a>
+            <a class="nav-link fs-5 fst-bold" id="ticker" href="/ticker">Ticker</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fs-5 fst-bold" id="ticker" href="/ticker">Ticker</a>
+            <a class="nav-link fs-5 fst-bold" id="about" href="/about">About</a>
           </li>
         </ul>
         <form class="d-flex">
@@ -68,6 +68,15 @@
       </div>
     </div>
   </nav>
+
+  <div id="user-info">
+    <span class="hello-msg">Hello, {{request.user}}</span> 
+    <!-- Button trigger modal -->
+    <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+      <a href="{% url 'logout' %}">Logout</a>
+    </button>
+  </div>
 
   {% block body %}{% endblock body %}
   <!-- Bootstrap js -->
