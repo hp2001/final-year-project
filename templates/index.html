@@ -1,82 +1,62 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block title %} StockPrediction | Home {% endblock title %}
 {% block body %}
 <style>
-  .dropdown:hover .dropdown-menu{
-    display : block;
-}
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 
-.bg-light-blue{
+  .bg-light-blue {
     background-color: rgb(196, 225, 248);
-}
+  }
 
-.font-blue{
+  .font-blue {
     color: rgb(26, 138, 230);
-}
+  }
 
-  .stock-bg{
+  .stock-bg {
     background-image: url("../static/homeBG1.jpg");
     background-size: cover;
-}
+  }
 </style>
 
-<!-- <div id="user-info">
-  <span class="hello-msg">Hello, {{request.user}}</span> 
-  <!-- Button trigger modal 
-  <button type="button" id="logOption" class="btn btn-outline-secondary" data-bs-toggle="modal"
-    data-bs-target="#exampleModal">
+<div id="user-info">
+  <span class="hello-msg">Hello, {{request.user}}</span>
+  <!-- Button trigger modal -->
+  <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     <a href="{% url 'logout' %}">Logout</a>
   </button>
-</div> -->
+</div>
 
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="me-auto">Instruction</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, {{request.user}}<br>
-      You can predict stock of your choice by entering ticker in Search Box. Don't know ticker for companies!! No worries... You can always visit ticker page.
-    </div>
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="me-auto">Instruction</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
   </div>
+  <div class="toast-body">
+    Hello, {{request.user}}<br>
+    You can predict stock of your choice by entering ticker in Search Box. Don't know ticker for companies!! No
+    worries... You can always visit ticker page.
+  </div>
+</div>
 
 <div class="container">
   <div>
     <h1 class="text-center" style="margin-top: 12vh">Stock Engine</h1>
-    <p
-      class="text-center"
-      style="padding: 0.1em; font-size: 1.5em; color: blue"
-    >
+    <p class="text-center" style="padding: 0.1em; font-size: 1.5em; color: blue">
       The Modern Stock Screener that helps you pick better stocks.
     </p>
   </div>
-  <!-- 
-  <div class="form-group">
-    <button>
-      <span style="display: flex; width: 100%"
-        ><i class="fa-solid fa-magnifying-glass fa-xl"></i
-      ></span>
-    </button>
-      <input
-      type="search"
-      class="form-control"
-      autocomplete="off"
-      placeholder="Type a Company Name or Brand to Search"
-      aria-label="Search"
-    /> 
-  </div>
--->
-
-
-
-<iframe id='output' src="https://share.streamlit.io/hp2001/streamlitapp/main/app.py" name="iframe_a" height="800px" width="100%" title="Iframe Example"></iframe>
+  <!-- Integration Here -->
+  <iframe id='output' src="https://share.streamlit.io/hp2001/streamlitapp/main/app.py" name="iframe_a" height="800px"
+    width="100%" title="Iframe Example"></iframe>
 
 </div>
 
 <script>
   window.onload = (event) => {
     var mytoast = document.querySelector('.toast');
-    var toast1 = new bootstrap.Toast(mytoast,{delay: 10000});
+    var toast1 = new bootstrap.Toast(mytoast, { delay: 10000 });
     // $('.toast').toast({delay:1000});
     toast1.show();
   }

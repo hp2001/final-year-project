@@ -23,37 +23,3 @@ def ticker(request):
 @login_required(login_url='login')
 def stockDetails(request):
     return render(request,'stockDetails.html')
-
-def tcs(request):
-    context = {
-        'companyName': "TCS"
-    }
-    return render(request, 'stockDetail.html', context)
-
-
-def fis(request):
-    context = {
-        'companyName': "FIS"
-    }
-    return render(request, 'stockDetail.html', context)
-
-
-def epam(request):
-    context = {
-        'companyName': "EPAM"
-    }
-    return render(request, 'stockDetail.html', context)
-
-
-def amazon(request):
-    context = {
-        'companyName': "Amazon"
-    }
-    return render(request, 'stockDetail.html', context)
-
-
-def capgemini(request):
-    context = {
-        'companyName': "Capgemini"
-    }
-    return render(request, 'stockDetail.html', context)

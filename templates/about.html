@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block title %} StockPrediction | About {% endblock title %}
 {% block body %}
 <style>
@@ -6,16 +6,18 @@
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
   }
-  
+
   html {
     box-sizing: border-box;
   }
-  
-  *, *:before, *:after {
+
+  *,
+  *:before,
+  *:after {
     box-sizing: inherit;
   }
-  
-  #logOption{
+
+  #logOption {
     color: black;
     text-decoration: none;
     right: 5px;
@@ -25,7 +27,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 8px;
   }
-  
+
   .about-section {
     font-size: 20px;
     padding: 50px;
@@ -33,30 +35,30 @@
     background-color: #474e5d;
     color: white;
   }
-  
 
-  .cardstyle{
+
+  .cardstyle {
     border: 2px solid black;
     border-radius: 10px;
   }
+
   @media screen and (max-width: 650px) {
     .column {
       width: 100%;
       display: block;
     }
   }
-  </style>
+</style>
 
-<!-- <div id="user-info">
-    <span class="hello-msg">Hello, {{request.user}}</span> 
-    <!-- Button trigger modal 
-    <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
-      <a href="{% url 'logout' %}">Logout</a>
-    </button>
-  </div> -->
+<div id="user-info">
+  <span class="hello-msg">Hello, {{request.user}}</span>
+  <!-- Button trigger modal -->
+  <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <a href="{% url 'logout' %}">Logout</a>
+  </button>
+</div>
 
-  <!-- write you code -->
+<!-- write you code -->
 <div class="about-section">
   <h3>Who we are and What we do...</h3>
 </div>
@@ -65,44 +67,52 @@
 <div class="container">
   <div class="row">
     <div class="col">
-        <div class="card cardstyle">
-          <div class="container mt-2 mx-4">
-            <h2 class="">Akshata Ubale</h2>
-            <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune <br>akshata2202.01@gmail.com </p>
-            <a class="align-center" href="https://www.linkedin.com/in/akshata-ubale-a26a7b218/" target="_blank"><button class="mb-2">Contact</button></a>
-          </div>
+      <div class="card cardstyle">
+        <div class="container mt-2 mx-4">
+          <h2 class="">Akshata Ubale</h2>
+          <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune
+            <br>akshata2202.01@gmail.com </p>
+          <a class="align-center" href="https://www.linkedin.com/in/akshata-ubale-a26a7b218/" target="_blank"><button
+              class="mb-2">Contact</button></a>
         </div>
+      </div>
     </div>
     <div class="col">
-        <div class="card cardstyle">
-          <div class="container mt-2 mx-4">
-            <h2 class="">Harshal Pujari</h2>
-            <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune <br>harshalpujari01@gmail.com </p>
-            <a class="align-center" href="http://www.linkedin.com/in/harshal-pujari-532420204/" target="_blank"><button class="mb-2">Contact</button></a>
+      <div class="card cardstyle">
+        <div class="container mt-2 mx-4">
+          <h2 class="">Harshal Pujari</h2>
+          <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune
+            <br>harshalpujari01@gmail.com </p>
+          <a class="align-center" href="http://www.linkedin.com/in/harshal-pujari-532420204/" target="_blank"><button
+              class="mb-2">Contact</button></a>
         </div>
       </div>
     </div>
   </div>
-    <div class="row">
-      <div class="col">
-          <div class="card cardstyle">
-            <div class="container mt-2 mx-4">
-              <h2 class="">Shubham Patil</h2>
-              <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune <br>shubhamp22301@gmail.com </p>
-              <a class="align-center" href="https://www.linkedin.com/in/shubham-patil-a94b9b205/" target="_blank"><button class="mb-2" >Contact</button></a>
-            </div>
-        </div>
-      </div>
-      <div class="col">
-          <div class="card cardstyle">
-            <div class="container mt-2 mx-4">
-              <h2 class="">Atharva Shrivastav</h2>
-              <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune <br>ajshrivastav18@gmail.com  </p>
-              <a class="align-center" href="https://www.linkedin.com/in/atharva-shrivastav" target="_blank"><button class="mb-2">Contact</button></a>
-            </div>
+  <div class="row">
+    <div class="col">
+      <div class="card cardstyle">
+        <div class="container mt-2 mx-4">
+          <h2 class="">Shubham Patil</h2>
+          <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune
+            <br>shubhamp22301@gmail.com </p>
+          <a class="align-center" href="https://www.linkedin.com/in/shubham-patil-a94b9b205/" target="_blank"><button
+              class="mb-2">Contact</button></a>
         </div>
       </div>
     </div>
+    <div class="col">
+      <div class="card cardstyle">
+        <div class="container mt-2 mx-4">
+          <h2 class="">Atharva Shrivastav</h2>
+          <p> Bachelor of Computer Engineering <br> JSPM's Jaywantrao Sawant College of Engineering, Pune
+            <br>ajshrivastav18@gmail.com </p>
+          <a class="align-center" href="https://www.linkedin.com/in/atharva-shrivastav" target="_blank"><button
+              class="mb-2">Contact</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
