@@ -23,3 +23,4 @@ def ticker(request):
 @login_required(login_url='login')
 def stockDetails(request):
     return render(request,'stockDetails.html')
+

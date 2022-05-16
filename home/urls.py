@@ -7,9 +7,4 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('stockDetails', views.stockDetails, name='stockDetails'),
     path('ticker', views.ticker, name='ticker'),
-    path('tcs', views.tcs, name='tcs'),
-    path('fis', views.fis, name='fis'),
-    path('epam', views.epam, name='epam'),
-    path('amazon', views.amazon, name='amazon'),
-    path('capgemini', views.capgemini, name='capgemini'),
 ]

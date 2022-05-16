@@ -1,2545 +1,2542 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 {% block title %} StockPrediction | Ticker {% endblock title %}
 {% block body %}
 <style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
 
-  td,
-  th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
+    <div id="user-info">
+      <span class="hello-msg">Hello, {{request.user}}</span> 
+      <!-- Button trigger modal -->
+      <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        <a href="{% url 'logout' %}">Logout</a>
+      </button>
+    </div>
 
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-</style>
-<div id="user-info">
-  <span class="hello-msg">Hello, {{request.user}}</span>
-  <!-- Button trigger modal -->
-  <button type="button" id="logOption" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    <a href="{% url 'logout' %}">Logout</a>
-  </button>
-</div>
 <div class="center" align="center">
-  <h1>Stock Ticker of Companies</h1>
+    <h1 >Stock Ticker of Companies</h1>
 
-  <table class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th title="Field #1">Sr. No.</th>
-        <th title="Field #2">Ticker</th>
-        <th title="Field #3">Company Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td align="right">1</td>
-        <td>RELIANCE.NS</td>
-        <td>Reliance Industries Limited</td>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead><tr><th title="Field #1">Sr. No.</th>
+      <th title="Field #2">Ticker</th>
+      <th title="Field #3">Company Name</th>
+      </tr></thead>
+      <tbody><tr>
+      <td align="right">1</td>
+      <td>RELIANCE.NS</td>
+      <td>Reliance Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">2</td>
-        <td>TCS.NS</td>
-        <td>Tata Consultancy Services Limited</td>
+      <td align="right">2</td>
+      <td>TCS.NS</td>
+      <td>Tata Consultancy Services Limited</td>
       </tr>
       <tr>
-        <td align="right">3</td>
-        <td>HINDUNILVR.NS</td>
-        <td>Hindustan Unilever Limited</td>
+      <td align="right">3</td>
+      <td>HINDUNILVR.NS</td>
+      <td>Hindustan Unilever Limited</td>
       </tr>
       <tr>
-        <td align="right">4</td>
-        <td>HDFCBANK.NS</td>
-        <td>HDFC Bank Limited</td>
+      <td align="right">4</td>
+      <td>HDFCBANK.NS</td>
+      <td>HDFC Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">5</td>
-        <td>HDFC.NS</td>
-        <td>Housing Development Finance Corporation Limited</td>
+      <td align="right">5</td>
+      <td>HDFC.NS</td>
+      <td>Housing Development Finance Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">6</td>
-        <td>INFY.NS</td>
-        <td>Infosys Limited</td>
+      <td align="right">6</td>
+      <td>INFY.NS</td>
+      <td>Infosys Limited</td>
       </tr>
       <tr>
-        <td align="right">7</td>
-        <td>KOTAKBANK.NS</td>
-        <td>Kotak Mahindra Bank Limited</td>
+      <td align="right">7</td>
+      <td>KOTAKBANK.NS</td>
+      <td>Kotak Mahindra Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">8</td>
-        <td>BHARTIARTL.NS</td>
-        <td>Bharti Airtel Limited</td>
+      <td align="right">8</td>
+      <td>BHARTIARTL.NS</td>
+      <td>Bharti Airtel Limited</td>
       </tr>
       <tr>
-        <td align="right">9</td>
-        <td>ITC.NS</td>
-        <td>ITC Limited</td>
+      <td align="right">9</td>
+      <td>ITC.NS</td>
+      <td>ITC Limited</td>
       </tr>
       <tr>
-        <td align="right">10</td>
-        <td>ICICIBANK.NS</td>
-        <td>ICICI Bank Limited</td>
+      <td align="right">10</td>
+      <td>ICICIBANK.NS</td>
+      <td>ICICI Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">11</td>
-        <td>SBIN.NS</td>
-        <td>State Bank of India</td>
+      <td align="right">11</td>
+      <td>SBIN.NS</td>
+      <td>State Bank of India</td>
       </tr>
       <tr>
-        <td align="right">12</td>
-        <td>ASIANPAINT.NS</td>
-        <td>Asian Paints Limited</td>
+      <td align="right">12</td>
+      <td>ASIANPAINT.NS</td>
+      <td>Asian Paints Limited</td>
       </tr>
       <tr>
-        <td align="right">13</td>
-        <td>DMART.NS</td>
-        <td>Avenue Supermarts Limited</td>
+      <td align="right">13</td>
+      <td>DMART.NS</td>
+      <td>Avenue Supermarts Limited</td>
       </tr>
       <tr>
-        <td align="right">14</td>
-        <td>BAJFINANCE.NS</td>
-        <td>Bajaj Finance Limited</td>
+      <td align="right">14</td>
+      <td>BAJFINANCE.NS</td>
+      <td>Bajaj Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">15</td>
-        <td>MARUTI.NS</td>
-        <td>Maruti Suzuki India Limited</td>
+      <td align="right">15</td>
+      <td>MARUTI.NS</td>
+      <td>Maruti Suzuki India Limited</td>
       </tr>
       <tr>
-        <td align="right">16</td>
-        <td>HCLTECH.NS</td>
-        <td>HCL Technologies Limited</td>
+      <td align="right">16</td>
+      <td>HCLTECH.NS</td>
+      <td>HCL Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">17</td>
-        <td>LT.NS</td>
-        <td>Larsen &amp; Toubro Limited</td>
+      <td align="right">17</td>
+      <td>LT.NS</td>
+      <td>Larsen &amp; Toubro Limited</td>
       </tr>
       <tr>
-        <td align="right">18</td>
-        <td>WIPRO.NS</td>
-        <td>Wipro Limited</td>
+      <td align="right">18</td>
+      <td>WIPRO.NS</td>
+      <td>Wipro Limited</td>
       </tr>
       <tr>
-        <td align="right">19</td>
-        <td>AXISBANK.NS</td>
-        <td>Axis Bank Limited</td>
+      <td align="right">19</td>
+      <td>AXISBANK.NS</td>
+      <td>Axis Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">20</td>
-        <td>ULTRACEMCO.NS</td>
-        <td>UltraTech Cement Limited</td>
+      <td align="right">20</td>
+      <td>ULTRACEMCO.NS</td>
+      <td>UltraTech Cement Limited</td>
       </tr>
       <tr>
-        <td align="right">21</td>
-        <td>HDFCLIFE.NS</td>
-        <td>HDFC Life Insurance Company Limited</td>
+      <td align="right">21</td>
+      <td>HDFCLIFE.NS</td>
+      <td>HDFC Life Insurance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">22</td>
-        <td>COALINDIA.NS</td>
-        <td>Coal India Limited</td>
+      <td align="right">22</td>
+      <td>COALINDIA.NS</td>
+      <td>Coal India Limited</td>
       </tr>
       <tr>
-        <td align="right">23</td>
-        <td>ONGC.NS</td>
-        <td>Oil &amp; Natural Gas Corporation Limited</td>
+      <td align="right">23</td>
+      <td>ONGC.NS</td>
+      <td>Oil &amp; Natural Gas Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">24</td>
-        <td>SUNPHARMA.NS</td>
-        <td>Sun Pharmaceutical Industries Limited</td>
+      <td align="right">24</td>
+      <td>SUNPHARMA.NS</td>
+      <td>Sun Pharmaceutical Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">25</td>
-        <td>NTPC.NS</td>
-        <td>NTPC Limited</td>
+      <td align="right">25</td>
+      <td>NTPC.NS</td>
+      <td>NTPC Limited</td>
       </tr>
       <tr>
-        <td align="right">26</td>
-        <td>POWERGRID.NS</td>
-        <td>Power Grid Corporation of India Limited</td>
+      <td align="right">26</td>
+      <td>POWERGRID.NS</td>
+      <td>Power Grid Corporation of India Limited</td>
       </tr>
       <tr>
-        <td align="right">27</td>
-        <td>TITAN.NS</td>
-        <td>Titan Company Limited</td>
+      <td align="right">27</td>
+      <td>TITAN.NS</td>
+      <td>Titan Company Limited</td>
       </tr>
       <tr>
-        <td align="right">28</td>
-        <td>DABUR.NS</td>
-        <td>Dabur India Limited</td>
+      <td align="right">28</td>
+      <td>DABUR.NS</td>
+      <td>Dabur India Limited</td>
       </tr>
       <tr>
-        <td align="right">29</td>
-        <td>IOC.NS</td>
-        <td>Indian Oil Corporation Limited</td>
+      <td align="right">29</td>
+      <td>IOC.NS</td>
+      <td>Indian Oil Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">30</td>
-        <td>BAJAJFINSV.NS</td>
-        <td>Bajaj Finserv Limited</td>
+      <td align="right">30</td>
+      <td>BAJAJFINSV.NS</td>
+      <td>Bajaj Finserv Limited</td>
       </tr>
       <tr>
-        <td align="right">31</td>
-        <td>PIDILITIND.NS</td>
-        <td>Pidilite Industries Limited</td>
+      <td align="right">31</td>
+      <td>PIDILITIND.NS</td>
+      <td>Pidilite Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">32</td>
-        <td>BPCL.NS</td>
-        <td>Bharat Petroleum Corporation Limited</td>
+      <td align="right">32</td>
+      <td>BPCL.NS</td>
+      <td>Bharat Petroleum Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">33</td>
-        <td>HINDZINC.NS</td>
-        <td>Hindustan Zinc Limited</td>
+      <td align="right">33</td>
+      <td>HINDZINC.NS</td>
+      <td>Hindustan Zinc Limited</td>
       </tr>
       <tr>
-        <td align="right">34</td>
-        <td>BRITANNIA.NS</td>
-        <td>Britannia Industries Limited</td>
+      <td align="right">34</td>
+      <td>BRITANNIA.NS</td>
+      <td>Britannia Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">35</td>
-        <td>SBILIFE.NS</td>
-        <td>SBI Life Insurance Company Limited</td>
+      <td align="right">35</td>
+      <td>SBILIFE.NS</td>
+      <td>SBI Life Insurance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">36</td>
-        <td>SHREECEM.NS</td>
-        <td>SHREE CEMENT LIMITED</td>
+      <td align="right">36</td>
+      <td>SHREECEM.NS</td>
+      <td>SHREE CEMENT LIMITED</td>
       </tr>
       <tr>
-        <td align="right">37</td>
-        <td>BAJAJ-AUTO.NS</td>
-        <td>Bajaj Auto Limited</td>
+      <td align="right">37</td>
+      <td>BAJAJ-AUTO.NS</td>
+      <td>Bajaj Auto Limited</td>
       </tr>
       <tr>
-        <td align="right">38</td>
-        <td>SBICARD.NS</td>
-        <td>SBI Cards and Payment Services Limited</td>
+      <td align="right">38</td>
+      <td>SBICARD.NS</td>
+      <td>SBI Cards and Payment Services Limited</td>
       </tr>
       <tr>
-        <td align="right">39</td>
-        <td>TECHM.NS</td>
-        <td>Tech Mahindra Limited</td>
+      <td align="right">39</td>
+      <td>TECHM.NS</td>
+      <td>Tech Mahindra Limited</td>
       </tr>
       <tr>
-        <td align="right">40</td>
-        <td>GODREJCP.NS</td>
-        <td>Godrej Consumer Products Limited</td>
+      <td align="right">40</td>
+      <td>GODREJCP.NS</td>
+      <td>Godrej Consumer Products Limited</td>
       </tr>
       <tr>
-        <td align="right">41</td>
-        <td>DIVISLAB.NS</td>
-        <td>Divi&#39;s Laboratories Limited</td>
+      <td align="right">41</td>
+      <td>DIVISLAB.NS</td>
+      <td>Divi&#39;s Laboratories Limited</td>
       </tr>
       <tr>
-        <td align="right">42</td>
-        <td>DRREDDY.NS</td>
-        <td>Dr. Reddy&#39;s Laboratories Limited</td>
+      <td align="right">42</td>
+      <td>DRREDDY.NS</td>
+      <td>Dr. Reddy&#39;s Laboratories Limited</td>
       </tr>
       <tr>
-        <td align="right">43</td>
-        <td>ICICIPRULI.NS</td>
-        <td>ICICI Prudential Life Insurance Company Limited</td>
+      <td align="right">43</td>
+      <td>ICICIPRULI.NS</td>
+      <td>ICICI Prudential Life Insurance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">44</td>
-        <td>ADANIPORTS.NS</td>
-        <td>Adani Ports and Special Economic Zone Limited</td>
+      <td align="right">44</td>
+      <td>ADANIPORTS.NS</td>
+      <td>Adani Ports and Special Economic Zone Limited</td>
       </tr>
       <tr>
-        <td align="right">45</td>
-        <td>ICICIGI.NS</td>
-        <td>ICICI Lombard General Insurance Company Limited</td>
+      <td align="right">45</td>
+      <td>ICICIGI.NS</td>
+      <td>ICICI Lombard General Insurance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">46</td>
-        <td>BERGEPAINT.NS</td>
-        <td>Berger Paints (I) Limited</td>
+      <td align="right">46</td>
+      <td>BERGEPAINT.NS</td>
+      <td>Berger Paints (I) Limited</td>
       </tr>
       <tr>
-        <td align="right">47</td>
-        <td>HDFCAMC.NS</td>
-        <td>HDFC Asset Management Company Limited</td>
+      <td align="right">47</td>
+      <td>HDFCAMC.NS</td>
+      <td>HDFC Asset Management Company Limited</td>
       </tr>
       <tr>
-        <td align="right">48</td>
-        <td>GSKCONS.NS</td>
-        <td>GlaxoSmithKline Consumer Healthcare Limited</td>
+      <td align="right">48</td>
+      <td>GSKCONS.NS</td>
+      <td>GlaxoSmithKline Consumer Healthcare Limited</td>
       </tr>
       <tr>
-        <td align="right">49</td>
-        <td>INDIGO.NS</td>
-        <td>InterGlobe Aviation Limited</td>
+      <td align="right">49</td>
+      <td>INDIGO.NS</td>
+      <td>InterGlobe Aviation Limited</td>
       </tr>
       <tr>
-        <td align="right">50</td>
-        <td>SIEMENS.NS</td>
-        <td>Siemens Limited</td>
+      <td align="right">50</td>
+      <td>SIEMENS.NS</td>
+      <td>Siemens Limited</td>
       </tr>
       <tr>
-        <td align="right">51</td>
-        <td>EICHERMOT.NS</td>
-        <td>Eicher Motors Limited</td>
+      <td align="right">51</td>
+      <td>EICHERMOT.NS</td>
+      <td>Eicher Motors Limited</td>
       </tr>
       <tr>
-        <td align="right">52</td>
-        <td>MARICO.NS</td>
-        <td>Marico Limited</td>
+      <td align="right">52</td>
+      <td>MARICO.NS</td>
+      <td>Marico Limited</td>
       </tr>
       <tr>
-        <td align="right">53</td>
-        <td>M&amp;M.NS</td>
-        <td>Mahindra &amp; Mahindra Limited</td>
+      <td align="right">53</td>
+      <td>M&amp;M.NS</td>
+      <td>Mahindra &amp; Mahindra Limited</td>
       </tr>
       <tr>
-        <td align="right">54</td>
-        <td>JSWSTEEL.NS</td>
-        <td>JSW Steel Limited</td>
+      <td align="right">54</td>
+      <td>JSWSTEEL.NS</td>
+      <td>JSW Steel Limited</td>
       </tr>
       <tr>
-        <td align="right">55</td>
-        <td>MCDOWELL-N.NS</td>
-        <td>United Spirits Limited</td>
+      <td align="right">55</td>
+      <td>MCDOWELL-N.NS</td>
+      <td>United Spirits Limited</td>
       </tr>
       <tr>
-        <td align="right">56</td>
-        <td>GAIL.NS</td>
-        <td>GAIL (India) Limited</td>
+      <td align="right">56</td>
+      <td>GAIL.NS</td>
+      <td>GAIL (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">57</td>
-        <td>CIPLA.NS</td>
-        <td>Cipla Limited</td>
+      <td align="right">57</td>
+      <td>CIPLA.NS</td>
+      <td>Cipla Limited</td>
       </tr>
       <tr>
-        <td align="right">58</td>
-        <td>COLPAL.NS</td>
-        <td>Colgate Palmolive (India) Limited</td>
+      <td align="right">58</td>
+      <td>COLPAL.NS</td>
+      <td>Colgate Palmolive (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">59</td>
-        <td>DLF.NS</td>
-        <td>DLF Limited</td>
+      <td align="right">59</td>
+      <td>DLF.NS</td>
+      <td>DLF Limited</td>
       </tr>
       <tr>
-        <td align="right">60</td>
-        <td>TORNTPHARM.NS</td>
-        <td>Torrent Pharmaceuticals Limited</td>
+      <td align="right">60</td>
+      <td>TORNTPHARM.NS</td>
+      <td>Torrent Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">61</td>
-        <td>PGHH.NS</td>
-        <td>Procter &amp; Gamble Hygiene and Health Care Limited</td>
+      <td align="right">61</td>
+      <td>PGHH.NS</td>
+      <td>Procter &amp; Gamble Hygiene and Health Care Limited</td>
       </tr>
       <tr>
-        <td align="right">62</td>
-        <td>BANDHANBNK.NS</td>
-        <td>Bandhan Bank Limited</td>
+      <td align="right">62</td>
+      <td>BANDHANBNK.NS</td>
+      <td>Bandhan Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">63</td>
-        <td>BIOCON.NS</td>
-        <td>Biocon Limited</td>
+      <td align="right">63</td>
+      <td>BIOCON.NS</td>
+      <td>Biocon Limited</td>
       </tr>
       <tr>
-        <td align="right">64</td>
-        <td>HEROMOTOCO.NS</td>
-        <td>Hero MotoCorp Limited</td>
+      <td align="right">64</td>
+      <td>HEROMOTOCO.NS</td>
+      <td>Hero MotoCorp Limited</td>
       </tr>
       <tr>
-        <td align="right">65</td>
-        <td>GRASIM.NS</td>
-        <td>Grasim Industries Limited</td>
+      <td align="right">65</td>
+      <td>GRASIM.NS</td>
+      <td>Grasim Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">66</td>
-        <td>AMBUJACEM.NS</td>
-        <td>Ambuja Cements Limited</td>
+      <td align="right">66</td>
+      <td>AMBUJACEM.NS</td>
+      <td>Ambuja Cements Limited</td>
       </tr>
       <tr>
-        <td align="right">67</td>
-        <td>TATASTEEL.NS</td>
-        <td>Tata Steel Limited</td>
+      <td align="right">67</td>
+      <td>TATASTEEL.NS</td>
+      <td>Tata Steel Limited</td>
       </tr>
       <tr>
-        <td align="right">68</td>
-        <td>HAVELLS.NS</td>
-        <td>Havells India Limited</td>
+      <td align="right">68</td>
+      <td>HAVELLS.NS</td>
+      <td>Havells India Limited</td>
       </tr>
       <tr>
-        <td align="right">69</td>
-        <td>PETRONET.NS</td>
-        <td>Petronet LNG Limited</td>
+      <td align="right">69</td>
+      <td>PETRONET.NS</td>
+      <td>Petronet LNG Limited</td>
       </tr>
       <tr>
-        <td align="right">70</td>
-        <td>INFRATEL.NS</td>
-        <td>Bharti Infratel Limited</td>
+      <td align="right">70</td>
+      <td>INFRATEL.NS</td>
+      <td>Bharti Infratel Limited</td>
       </tr>
       <tr>
-        <td align="right">71</td>
-        <td>HINDPETRO.NS</td>
-        <td>Hindustan Petroleum Corporation Limited</td>
+      <td align="right">71</td>
+      <td>HINDPETRO.NS</td>
+      <td>Hindustan Petroleum Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">72</td>
-        <td>YESBANK.NS</td>
-        <td>Yes Bank Limited</td>
+      <td align="right">72</td>
+      <td>YESBANK.NS</td>
+      <td>Yes Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">73</td>
-        <td>ALKEM.NS</td>
-        <td>Alkem Laboratories Limited</td>
+      <td align="right">73</td>
+      <td>ALKEM.NS</td>
+      <td>Alkem Laboratories Limited</td>
       </tr>
       <tr>
-        <td align="right">74</td>
-        <td>BOSCHLTD.NS</td>
-        <td>Bosch Limited</td>
+      <td align="right">74</td>
+      <td>BOSCHLTD.NS</td>
+      <td>Bosch Limited</td>
       </tr>
       <tr>
-        <td align="right">75</td>
-        <td>CADILAHC.NS</td>
-        <td>Cadila Healthcare Limited</td>
+      <td align="right">75</td>
+      <td>CADILAHC.NS</td>
+      <td>Cadila Healthcare Limited</td>
       </tr>
       <tr>
-        <td align="right">76</td>
-        <td>IGL.NS</td>
-        <td>Indraprastha Gas Limited</td>
+      <td align="right">76</td>
+      <td>IGL.NS</td>
+      <td>Indraprastha Gas Limited</td>
       </tr>
       <tr>
-        <td align="right">77</td>
-        <td>LUPIN.NS</td>
-        <td>Lupin Limited</td>
+      <td align="right">77</td>
+      <td>LUPIN.NS</td>
+      <td>Lupin Limited</td>
       </tr>
       <tr>
-        <td align="right">78</td>
-        <td>UPL.NS</td>
-        <td>UPL Limited</td>
+      <td align="right">78</td>
+      <td>UPL.NS</td>
+      <td>UPL Limited</td>
       </tr>
       <tr>
-        <td align="right">79</td>
-        <td>NAUKRI.NS</td>
-        <td>Info Edge (India) Limited</td>
+      <td align="right">79</td>
+      <td>NAUKRI.NS</td>
+      <td>Info Edge (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">80</td>
-        <td>LTI.NS</td>
-        <td>Larsen &amp; Toubro Infotech Limited</td>
+      <td align="right">80</td>
+      <td>LTI.NS</td>
+      <td>Larsen &amp; Toubro Infotech Limited</td>
       </tr>
       <tr>
-        <td align="right">81</td>
-        <td>BANKBARODA.NS</td>
-        <td>Bank of Baroda</td>
+      <td align="right">81</td>
+      <td>BANKBARODA.NS</td>
+      <td>Bank of Baroda</td>
       </tr>
       <tr>
-        <td align="right">82</td>
-        <td>MRF.NS</td>
-        <td>MRF Limited</td>
+      <td align="right">82</td>
+      <td>MRF.NS</td>
+      <td>MRF Limited</td>
       </tr>
       <tr>
-        <td align="right">83</td>
-        <td>MUTHOOTFIN.NS</td>
-        <td>Muthoot Finance Limited</td>
+      <td align="right">83</td>
+      <td>MUTHOOTFIN.NS</td>
+      <td>Muthoot Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">84</td>
-        <td>NMDC.NS</td>
-        <td>NMDC Limited</td>
+      <td align="right">84</td>
+      <td>NMDC.NS</td>
+      <td>NMDC Limited</td>
       </tr>
       <tr>
-        <td align="right">85</td>
-        <td>INDUSINDBK.NS</td>
-        <td>IndusInd Bank Limited</td>
+      <td align="right">85</td>
+      <td>INDUSINDBK.NS</td>
+      <td>IndusInd Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">86</td>
-        <td>UBL.NS</td>
-        <td>United Breweries Limited</td>
+      <td align="right">86</td>
+      <td>UBL.NS</td>
+      <td>United Breweries Limited</td>
       </tr>
       <tr>
-        <td align="right">87</td>
-        <td>PFC.NS</td>
-        <td>Power Finance Corporation Limited</td>
+      <td align="right">87</td>
+      <td>PFC.NS</td>
+      <td>Power Finance Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">88</td>
-        <td>AUROPHARMA.NS</td>
-        <td>Aurobindo Pharma Limited</td>
+      <td align="right">88</td>
+      <td>AUROPHARMA.NS</td>
+      <td>Aurobindo Pharma Limited</td>
       </tr>
       <tr>
-        <td align="right">89</td>
-        <td>VEDL.NS</td>
-        <td>Vedanta Limited</td>
+      <td align="right">89</td>
+      <td>VEDL.NS</td>
+      <td>Vedanta Limited</td>
       </tr>
       <tr>
-        <td align="right">90</td>
-        <td>ADANIGREEN.NS</td>
-        <td>Adani Green Energy Limited</td>
+      <td align="right">90</td>
+      <td>ADANIGREEN.NS</td>
+      <td>Adani Green Energy Limited</td>
       </tr>
       <tr>
-        <td align="right">91</td>
-        <td>WHIRLPOOL.NS</td>
-        <td>Whirlpool of India Limited</td>
+      <td align="right">91</td>
+      <td>WHIRLPOOL.NS</td>
+      <td>Whirlpool of India Limited</td>
       </tr>
       <tr>
-        <td align="right">92</td>
-        <td>HONAUT.NS</td>
-        <td>Honeywell Automation India Limited</td>
+      <td align="right">92</td>
+      <td>HONAUT.NS</td>
+      <td>Honeywell Automation India Limited</td>
       </tr>
       <tr>
-        <td align="right">93</td>
-        <td>TATAMOTORS.NS</td>
-        <td>Tata Motors Limited</td>
+      <td align="right">93</td>
+      <td>TATAMOTORS.NS</td>
+      <td>Tata Motors Limited</td>
       </tr>
       <tr>
-        <td align="right">94</td>
-        <td>PNB.NS</td>
-        <td>Punjab National Bank</td>
+      <td align="right">94</td>
+      <td>PNB.NS</td>
+      <td>Punjab National Bank</td>
       </tr>
       <tr>
-        <td align="right">95</td>
-        <td>HINDALCO.NS</td>
-        <td>Hindalco Industries Limited</td>
+      <td align="right">95</td>
+      <td>HINDALCO.NS</td>
+      <td>Hindalco Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">96</td>
-        <td>GLAXO.NS</td>
-        <td>GlaxoSmithKline Pharmaceuticals Limited</td>
+      <td align="right">96</td>
+      <td>GLAXO.NS</td>
+      <td>GlaxoSmithKline Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">97</td>
-        <td>3MINDIA.NS</td>
-        <td>3M India Limited</td>
+      <td align="right">97</td>
+      <td>3MINDIA.NS</td>
+      <td>3M India Limited</td>
       </tr>
       <tr>
-        <td align="right">98</td>
-        <td>PEL.NS</td>
-        <td>Piramal Enterprises Limited</td>
+      <td align="right">98</td>
+      <td>PEL.NS</td>
+      <td>Piramal Enterprises Limited</td>
       </tr>
       <tr>
-        <td align="right">99</td>
-        <td>KANSAINER.NS</td>
-        <td>Kansai Nerolac Paints Limited</td>
+      <td align="right">99</td>
+      <td>KANSAINER.NS</td>
+      <td>Kansai Nerolac Paints Limited</td>
       </tr>
       <tr>
-        <td align="right">100</td>
-        <td>ADANITRANS.NS</td>
-        <td>Adani Transmission Limited</td>
+      <td align="right">100</td>
+      <td>ADANITRANS.NS</td>
+      <td>Adani Transmission Limited</td>
       </tr>
       <tr>
-        <td align="right">101</td>
-        <td>CONCOR.NS</td>
-        <td>Container Corporation of India Limited</td>
+      <td align="right">101</td>
+      <td>CONCOR.NS</td>
+      <td>Container Corporation of India Limited</td>
       </tr>
       <tr>
-        <td align="right">102</td>
-        <td>NHPC.NS</td>
-        <td>NHPC Limited</td>
+      <td align="right">102</td>
+      <td>NHPC.NS</td>
+      <td>NHPC Limited</td>
       </tr>
       <tr>
-        <td align="right">103</td>
-        <td>IDBI.NS</td>
-        <td>IDBI Bank Limited</td>
+      <td align="right">103</td>
+      <td>IDBI.NS</td>
+      <td>IDBI Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">104</td>
-        <td>BAJAJHLDNG.NS</td>
-        <td>Bajaj Holdings &amp; Investment Limited</td>
+      <td align="right">104</td>
+      <td>BAJAJHLDNG.NS</td>
+      <td>Bajaj Holdings &amp; Investment Limited</td>
       </tr>
       <tr>
-        <td align="right">105</td>
-        <td>ABB.NS</td>
-        <td>ABB India Limited</td>
+      <td align="right">105</td>
+      <td>ABB.NS</td>
+      <td>ABB India Limited</td>
       </tr>
       <tr>
-        <td align="right">106</td>
-        <td>JUBLFOOD.NS</td>
-        <td>Jubilant Foodworks Limited</td>
+      <td align="right">106</td>
+      <td>JUBLFOOD.NS</td>
+      <td>Jubilant Foodworks Limited</td>
       </tr>
       <tr>
-        <td align="right">107</td>
-        <td>MOTHERSUMI.NS</td>
-        <td>Motherson Sumi Systems Limited</td>
+      <td align="right">107</td>
+      <td>MOTHERSUMI.NS</td>
+      <td>Motherson Sumi Systems Limited</td>
       </tr>
       <tr>
-        <td align="right">108</td>
-        <td>PAGEIND.NS</td>
-        <td>Page Industries Limited</td>
+      <td align="right">108</td>
+      <td>PAGEIND.NS</td>
+      <td>Page Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">109</td>
-        <td>TATACONSUM.NS</td>
-        <td>TATA CONSUMER PRODUCTS LIMITED</td>
+      <td align="right">109</td>
+      <td>TATACONSUM.NS</td>
+      <td>TATA CONSUMER PRODUCTS LIMITED</td>
       </tr>
       <tr>
-        <td align="right">110</td>
-        <td>NIACL.NS</td>
-        <td>The New India Assurance Company Limited</td>
+      <td align="right">110</td>
+      <td>NIACL.NS</td>
+      <td>The New India Assurance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">111</td>
-        <td>GICRE.NS</td>
-        <td>General Insurance Corporation of India</td>
+      <td align="right">111</td>
+      <td>GICRE.NS</td>
+      <td>General Insurance Corporation of India</td>
       </tr>
       <tr>
-        <td align="right">112</td>
-        <td>PFIZER.NS</td>
-        <td>Pfizer Limited</td>
+      <td align="right">112</td>
+      <td>PFIZER.NS</td>
+      <td>Pfizer Limited</td>
       </tr>
       <tr>
-        <td align="right">113</td>
-        <td>ACC.NS</td>
-        <td>ACC Limited</td>
+      <td align="right">113</td>
+      <td>ACC.NS</td>
+      <td>ACC Limited</td>
       </tr>
       <tr>
-        <td align="right">114</td>
-        <td>BEL.NS</td>
-        <td>Bharat Electronics Limited</td>
+      <td align="right">114</td>
+      <td>BEL.NS</td>
+      <td>Bharat Electronics Limited</td>
       </tr>
       <tr>
-        <td align="right">115</td>
-        <td>GILLETTE.NS</td>
-        <td>Gillette India Limited</td>
+      <td align="right">115</td>
+      <td>GILLETTE.NS</td>
+      <td>Gillette India Limited</td>
       </tr>
       <tr>
-        <td align="right">116</td>
-        <td>IPCALAB.NS</td>
-        <td>IPCA Laboratories Limited</td>
+      <td align="right">116</td>
+      <td>IPCALAB.NS</td>
+      <td>IPCA Laboratories Limited</td>
       </tr>
       <tr>
-        <td align="right">117</td>
-        <td>RECLTD.NS</td>
-        <td>REC Limited</td>
+      <td align="right">117</td>
+      <td>RECLTD.NS</td>
+      <td>REC Limited</td>
       </tr>
       <tr>
-        <td align="right">118</td>
-        <td>HAL.NS</td>
-        <td>Hindustan Aeronautics Limited</td>
+      <td align="right">118</td>
+      <td>HAL.NS</td>
+      <td>Hindustan Aeronautics Limited</td>
       </tr>
       <tr>
-        <td align="right">119</td>
-        <td>OFSS.NS</td>
-        <td>Oracle Financial Services Software Limited</td>
+      <td align="right">119</td>
+      <td>OFSS.NS</td>
+      <td>Oracle Financial Services Software Limited</td>
       </tr>
       <tr>
-        <td align="right">120</td>
-        <td>TRENT.NS</td>
-        <td>Trent Limited</td>
+      <td align="right">120</td>
+      <td>TRENT.NS</td>
+      <td>Trent Limited</td>
       </tr>
       <tr>
-        <td align="right">121</td>
-        <td>RAJESHEXPO.NS</td>
-        <td>Rajesh Exports Limited</td>
+      <td align="right">121</td>
+      <td>RAJESHEXPO.NS</td>
+      <td>Rajesh Exports Limited</td>
       </tr>
       <tr>
-        <td align="right">122</td>
-        <td>PIIND.NS</td>
-        <td>PI Industries Limited</td>
+      <td align="right">122</td>
+      <td>PIIND.NS</td>
+      <td>PI Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">123</td>
-        <td>SRF.NS</td>
-        <td>SRF Limited</td>
+      <td align="right">123</td>
+      <td>SRF.NS</td>
+      <td>SRF Limited</td>
       </tr>
       <tr>
-        <td align="right">124</td>
-        <td>COROMANDEL.NS</td>
-        <td>Coromandel International Limited</td>
+      <td align="right">124</td>
+      <td>COROMANDEL.NS</td>
+      <td>Coromandel International Limited</td>
       </tr>
       <tr>
-        <td align="right">125</td>
-        <td>GUJGASLTD.NS</td>
-        <td>Gujarat Gas Limited</td>
+      <td align="right">125</td>
+      <td>GUJGASLTD.NS</td>
+      <td>Gujarat Gas Limited</td>
       </tr>
       <tr>
-        <td align="right">126</td>
-        <td>APOLLOHOSP.NS</td>
-        <td>Apollo Hospitals Enterprise Limited</td>
+      <td align="right">126</td>
+      <td>APOLLOHOSP.NS</td>
+      <td>Apollo Hospitals Enterprise Limited</td>
       </tr>
       <tr>
-        <td align="right">127</td>
-        <td>BATAINDIA.NS</td>
-        <td>Bata India Limited</td>
+      <td align="right">127</td>
+      <td>BATAINDIA.NS</td>
+      <td>Bata India Limited</td>
       </tr>
       <tr>
-        <td align="right">128</td>
-        <td>VOLTAS.NS</td>
-        <td>Voltas Limited</td>
+      <td align="right">128</td>
+      <td>VOLTAS.NS</td>
+      <td>Voltas Limited</td>
       </tr>
       <tr>
-        <td align="right">129</td>
-        <td>IRCTC.NS</td>
-        <td>Indian Railway Catering And Tourism Corporation Limited</td>
+      <td align="right">129</td>
+      <td>IRCTC.NS</td>
+      <td>Indian Railway Catering And Tourism Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">130</td>
-        <td>BALKRISIND.NS</td>
-        <td>Balkrishna Industries Limited</td>
+      <td align="right">130</td>
+      <td>BALKRISIND.NS</td>
+      <td>Balkrishna Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">131</td>
-        <td>VBL.NS</td>
-        <td>Varun Beverages Limited</td>
+      <td align="right">131</td>
+      <td>VBL.NS</td>
+      <td>Varun Beverages Limited</td>
       </tr>
       <tr>
-        <td align="right">132</td>
-        <td>NAM-INDIA.NS</td>
-        <td>Nippon Life India Asset Management Limited</td>
+      <td align="right">132</td>
+      <td>NAM-INDIA.NS</td>
+      <td>Nippon Life India Asset Management Limited</td>
       </tr>
       <tr>
-        <td align="right">133</td>
-        <td>GODREJPROP.NS</td>
-        <td>Godrej Properties Limited</td>
+      <td align="right">133</td>
+      <td>GODREJPROP.NS</td>
+      <td>Godrej Properties Limited</td>
       </tr>
       <tr>
-        <td align="right">134</td>
-        <td>ADANIENT.NS</td>
-        <td>Adani Enterprises Limited</td>
+      <td align="right">134</td>
+      <td>ADANIENT.NS</td>
+      <td>Adani Enterprises Limited</td>
       </tr>
       <tr>
-        <td align="right">135</td>
-        <td>SRTRANSFIN.NS</td>
-        <td>Shriram Transport Finance Company Limited</td>
+      <td align="right">135</td>
+      <td>SRTRANSFIN.NS</td>
+      <td>Shriram Transport Finance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">136</td>
-        <td>RELAXO.NS</td>
-        <td>Relaxo Footwears Limited</td>
+      <td align="right">136</td>
+      <td>RELAXO.NS</td>
+      <td>Relaxo Footwears Limited</td>
       </tr>
       <tr>
-        <td align="right">137</td>
-        <td>AUBANK.NS</td>
-        <td>AU Small Finance Bank Limited</td>
+      <td align="right">137</td>
+      <td>AUBANK.NS</td>
+      <td>AU Small Finance Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">138</td>
-        <td>SANOFI.NS</td>
-        <td>Sanofi India Limited</td>
+      <td align="right">138</td>
+      <td>SANOFI.NS</td>
+      <td>Sanofi India Limited</td>
       </tr>
       <tr>
-        <td align="right">139</td>
-        <td>TVSMOTOR.NS</td>
-        <td>TVS Motor Company Limited</td>
+      <td align="right">139</td>
+      <td>TVSMOTOR.NS</td>
+      <td>TVS Motor Company Limited</td>
       </tr>
       <tr>
-        <td align="right">140</td>
-        <td>ASTRAL.NS</td>
-        <td>Astral Poly Technik Limited</td>
+      <td align="right">140</td>
+      <td>ASTRAL.NS</td>
+      <td>Astral Poly Technik Limited</td>
       </tr>
       <tr>
-        <td align="right">141</td>
-        <td>MINDTREE.NS</td>
-        <td>MindTree Limited</td>
+      <td align="right">141</td>
+      <td>MINDTREE.NS</td>
+      <td>MindTree Limited</td>
       </tr>
       <tr>
-        <td align="right">142</td>
-        <td>TORNTPOWER.NS</td>
-        <td>Torrent Power Limited</td>
+      <td align="right">142</td>
+      <td>TORNTPOWER.NS</td>
+      <td>Torrent Power Limited</td>
       </tr>
       <tr>
-        <td align="right">143</td>
-        <td>SUNDARMFIN.NS</td>
-        <td>Sundaram Finance Limited</td>
+      <td align="right">143</td>
+      <td>SUNDARMFIN.NS</td>
+      <td>Sundaram Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">144</td>
-        <td>AARTIIND.NS</td>
-        <td>Aarti Industries Limited</td>
+      <td align="right">144</td>
+      <td>AARTIIND.NS</td>
+      <td>Aarti Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">145</td>
-        <td>AIAENG.NS</td>
-        <td>AIA Engineering Limited</td>
+      <td align="right">145</td>
+      <td>AIAENG.NS</td>
+      <td>AIA Engineering Limited</td>
       </tr>
       <tr>
-        <td align="right">146</td>
-        <td>CROMPTON.NS</td>
-        <td>Crompton Greaves Consumer Electricals Limited</td>
+      <td align="right">146</td>
+      <td>CROMPTON.NS</td>
+      <td>Crompton Greaves Consumer Electricals Limited</td>
       </tr>
       <tr>
-        <td align="right">147</td>
-        <td>ASHOKLEY.NS</td>
-        <td>Ashok Leyland Limited</td>
+      <td align="right">147</td>
+      <td>ASHOKLEY.NS</td>
+      <td>Ashok Leyland Limited</td>
       </tr>
       <tr>
-        <td align="right">148</td>
-        <td>MPHASIS.NS</td>
-        <td>MphasiS Limited</td>
+      <td align="right">148</td>
+      <td>MPHASIS.NS</td>
+      <td>MphasiS Limited</td>
       </tr>
       <tr>
-        <td align="right">149</td>
-        <td>LTTS.NS</td>
-        <td>L&amp;T Technology Services Limited</td>
+      <td align="right">149</td>
+      <td>LTTS.NS</td>
+      <td>L&amp;T Technology Services Limited</td>
       </tr>
       <tr>
-        <td align="right">150</td>
-        <td>RAMCOCEM.NS</td>
-        <td>The Ramco Cements Limited</td>
+      <td align="right">150</td>
+      <td>RAMCOCEM.NS</td>
+      <td>The Ramco Cements Limited</td>
       </tr>
       <tr>
-        <td align="right">151</td>
-        <td>OBEROIRLTY.NS</td>
-        <td>Oberoi Realty Limited</td>
+      <td align="right">151</td>
+      <td>OBEROIRLTY.NS</td>
+      <td>Oberoi Realty Limited</td>
       </tr>
       <tr>
-        <td align="right">152</td>
-        <td>CHOLAFIN.NS</td>
-        <td>Cholamandalam Investment and Finance Company Limited</td>
+      <td align="right">152</td>
+      <td>CHOLAFIN.NS</td>
+      <td>Cholamandalam Investment and Finance Company Limited</td>
       </tr>
       <tr>
-        <td align="right">153</td>
-        <td>AJANTPHARM.NS</td>
-        <td>Ajanta Pharma Limited</td>
+      <td align="right">153</td>
+      <td>AJANTPHARM.NS</td>
+      <td>Ajanta Pharma Limited</td>
       </tr>
       <tr>
-        <td align="right">154</td>
-        <td>ZEEL.NS</td>
-        <td>Zee Entertainment Enterprises Limited</td>
+      <td align="right">154</td>
+      <td>ZEEL.NS</td>
+      <td>Zee Entertainment Enterprises Limited</td>
       </tr>
       <tr>
-        <td align="right">155</td>
-        <td>LICHSGFIN.NS</td>
-        <td>LIC Housing Finance Limited</td>
+      <td align="right">155</td>
+      <td>LICHSGFIN.NS</td>
+      <td>LIC Housing Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">156</td>
-        <td>ATUL.NS</td>
-        <td>Atul Limited</td>
+      <td align="right">156</td>
+      <td>ATUL.NS</td>
+      <td>Atul Limited</td>
       </tr>
       <tr>
-        <td align="right">157</td>
-        <td>ABFRL.NS</td>
-        <td>Aditya Birla Fashion and Retail Limited</td>
+      <td align="right">157</td>
+      <td>ABFRL.NS</td>
+      <td>Aditya Birla Fashion and Retail Limited</td>
       </tr>
       <tr>
-        <td align="right">158</td>
-        <td>LALPATHLAB.NS</td>
-        <td>Dr. Lal Path Labs Ltd.</td>
+      <td align="right">158</td>
+      <td>LALPATHLAB.NS</td>
+      <td>Dr. Lal Path Labs Ltd.</td>
       </tr>
       <tr>
-        <td align="right">159</td>
-        <td>WABCOINDIA.NS</td>
-        <td>WABCO India Limited</td>
+      <td align="right">159</td>
+      <td>WABCOINDIA.NS</td>
+      <td>WABCO India Limited</td>
       </tr>
       <tr>
-        <td align="right">160</td>
-        <td>SCHAEFFLER.NS</td>
-        <td>Schaeffler India Limited</td>
+      <td align="right">160</td>
+      <td>SCHAEFFLER.NS</td>
+      <td>Schaeffler India Limited</td>
       </tr>
       <tr>
-        <td align="right">161</td>
-        <td>SUNTV.NS</td>
-        <td>Sun TV Network Limited</td>
+      <td align="right">161</td>
+      <td>SUNTV.NS</td>
+      <td>Sun TV Network Limited</td>
       </tr>
       <tr>
-        <td align="right">162</td>
-        <td>EXIDEIND.NS</td>
-        <td>Exide Industries Limited</td>
+      <td align="right">162</td>
+      <td>EXIDEIND.NS</td>
+      <td>Exide Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">163</td>
-        <td>POLYCAB.NS</td>
-        <td>Polycab India Limited</td>
+      <td align="right">163</td>
+      <td>POLYCAB.NS</td>
+      <td>Polycab India Limited</td>
       </tr>
       <tr>
-        <td align="right">164</td>
-        <td>SUPREMEIND.NS</td>
-        <td>Supreme Industries Limited</td>
+      <td align="right">164</td>
+      <td>SUPREMEIND.NS</td>
+      <td>Supreme Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">165</td>
-        <td>BHARATFORG.NS</td>
-        <td>Bharat Forge Limited</td>
+      <td align="right">165</td>
+      <td>BHARATFORG.NS</td>
+      <td>Bharat Forge Limited</td>
       </tr>
       <tr>
-        <td align="right">166</td>
-        <td>ADANIPOWER.NS</td>
-        <td>Adani Power Limited</td>
+      <td align="right">166</td>
+      <td>ADANIPOWER.NS</td>
+      <td>Adani Power Limited</td>
       </tr>
       <tr>
-        <td align="right">167</td>
-        <td>BANKINDIA.NS</td>
-        <td>Bank of India</td>
+      <td align="right">167</td>
+      <td>BANKINDIA.NS</td>
+      <td>Bank of India</td>
       </tr>
       <tr>
-        <td align="right">168</td>
-        <td>MFSL.NS</td>
-        <td>Max Financial Services Limited</td>
+      <td align="right">168</td>
+      <td>MFSL.NS</td>
+      <td>Max Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">169</td>
-        <td>L&amp;TFH.NS</td>
-        <td>L&amp;T Finance Holdings Limited</td>
+      <td align="right">169</td>
+      <td>L&amp;TFH.NS</td>
+      <td>L&amp;T Finance Holdings Limited</td>
       </tr>
       <tr>
-        <td align="right">170</td>
-        <td>IDFCFIRSTB.NS</td>
-        <td>IDFC First Bank Limited</td>
+      <td align="right">170</td>
+      <td>IDFCFIRSTB.NS</td>
+      <td>IDFC First Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">171</td>
-        <td>AKZOINDIA.NS</td>
-        <td>Akzo Nobel India Limited</td>
+      <td align="right">171</td>
+      <td>AKZOINDIA.NS</td>
+      <td>Akzo Nobel India Limited</td>
       </tr>
       <tr>
-        <td align="right">172</td>
-        <td>APLLTD.NS</td>
-        <td>Alembic Pharmaceuticals Limited</td>
+      <td align="right">172</td>
+      <td>APLLTD.NS</td>
+      <td>Alembic Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">173</td>
-        <td>GMRINFRA.NS</td>
-        <td>GMR Infrastructure Limited</td>
+      <td align="right">173</td>
+      <td>GMRINFRA.NS</td>
+      <td>GMR Infrastructure Limited</td>
       </tr>
       <tr>
-        <td align="right">174</td>
-        <td>CASTROLIND.NS</td>
-        <td>Castrol India Limited</td>
+      <td align="right">174</td>
+      <td>CASTROLIND.NS</td>
+      <td>Castrol India Limited</td>
       </tr>
       <tr>
-        <td align="right">175</td>
-        <td>UNIONBANK.NS</td>
-        <td>Union Bank of India</td>
+      <td align="right">175</td>
+      <td>UNIONBANK.NS</td>
+      <td>Union Bank of India</td>
       </tr>
       <tr>
-        <td align="right">176</td>
-        <td>ABCAPITAL.NS</td>
-        <td>Aditya Birla Capital Limited</td>
+      <td align="right">176</td>
+      <td>ABCAPITAL.NS</td>
+      <td>Aditya Birla Capital Limited</td>
       </tr>
       <tr>
-        <td align="right">177</td>
-        <td>GSPL.NS</td>
-        <td>Gujarat State Petronet Limited</td>
+      <td align="right">177</td>
+      <td>GSPL.NS</td>
+      <td>Gujarat State Petronet Limited</td>
       </tr>
       <tr>
-        <td align="right">178</td>
-        <td>SYNGENE.NS</td>
-        <td>Syngene International Limited</td>
+      <td align="right">178</td>
+      <td>SYNGENE.NS</td>
+      <td>Syngene International Limited</td>
       </tr>
       <tr>
-        <td align="right">179</td>
-        <td>GODREJIND.NS</td>
-        <td>Godrej Industries Limited</td>
+      <td align="right">179</td>
+      <td>GODREJIND.NS</td>
+      <td>Godrej Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">180</td>
-        <td>FORTIS.NS</td>
-        <td>Fortis Healthcare Limited</td>
+      <td align="right">180</td>
+      <td>FORTIS.NS</td>
+      <td>Fortis Healthcare Limited</td>
       </tr>
       <tr>
-        <td align="right">181</td>
-        <td>SAIL.NS</td>
-        <td>Steel Authority of India Limited</td>
+      <td align="right">181</td>
+      <td>SAIL.NS</td>
+      <td>Steel Authority of India Limited</td>
       </tr>
       <tr>
-        <td align="right">182</td>
-        <td>ADANIGAS.NS</td>
-        <td>Adani Gas Limited</td>
+      <td align="right">182</td>
+      <td>ADANIGAS.NS</td>
+      <td>Adani Gas Limited</td>
       </tr>
       <tr>
-        <td align="right">183</td>
-        <td>CUB.NS</td>
-        <td>City Union Bank Limited</td>
+      <td align="right">183</td>
+      <td>CUB.NS</td>
+      <td>City Union Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">184</td>
-        <td>DALBHARAT.NS</td>
-        <td>Dalmia Bharat Limited</td>
+      <td align="right">184</td>
+      <td>DALBHARAT.NS</td>
+      <td>Dalmia Bharat Limited</td>
       </tr>
       <tr>
-        <td align="right">185</td>
-        <td>CANBK.NS</td>
-        <td>Canara Bank</td>
+      <td align="right">185</td>
+      <td>CANBK.NS</td>
+      <td>Canara Bank</td>
       </tr>
       <tr>
-        <td align="right">186</td>
-        <td>AAVAS.NS</td>
-        <td>Aavas Financiers Limited</td>
+      <td align="right">186</td>
+      <td>AAVAS.NS</td>
+      <td>Aavas Financiers Limited</td>
       </tr>
       <tr>
-        <td align="right">187</td>
-        <td>SUMICHEM.NS</td>
-        <td>Sumitomo Chemical India Limited</td>
+      <td align="right">187</td>
+      <td>SUMICHEM.NS</td>
+      <td>Sumitomo Chemical India Limited</td>
       </tr>
       <tr>
-        <td align="right">188</td>
-        <td>NATCOPHARM.NS</td>
-        <td>Natco Pharma Limited</td>
+      <td align="right">188</td>
+      <td>NATCOPHARM.NS</td>
+      <td>Natco Pharma Limited</td>
       </tr>
       <tr>
-        <td align="right">189</td>
-        <td>M&amp;MFIN.NS</td>
-        <td>Mahindra &amp; Mahindra Financial Services Limited</td>
+      <td align="right">189</td>
+      <td>M&amp;MFIN.NS</td>
+      <td>Mahindra &amp; Mahindra Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">190</td>
-        <td>CRISIL.NS</td>
-        <td>CRISIL Limited</td>
+      <td align="right">190</td>
+      <td>CRISIL.NS</td>
+      <td>CRISIL Limited</td>
       </tr>
       <tr>
-        <td align="right">191</td>
-        <td>CUMMINSIND.NS</td>
-        <td>Cummins India Limited</td>
+      <td align="right">191</td>
+      <td>CUMMINSIND.NS</td>
+      <td>Cummins India Limited</td>
       </tr>
       <tr>
-        <td align="right">192</td>
-        <td>OIL.NS</td>
-        <td>Oil India Limited</td>
+      <td align="right">192</td>
+      <td>OIL.NS</td>
+      <td>Oil India Limited</td>
       </tr>
       <tr>
-        <td align="right">193</td>
-        <td>IDEA.NS</td>
-        <td>Vodafone Idea Limited</td>
+      <td align="right">193</td>
+      <td>IDEA.NS</td>
+      <td>Vodafone Idea Limited</td>
       </tr>
       <tr>
-        <td align="right">194</td>
-        <td>ISEC.NS</td>
-        <td>ICICI Securities Limited</td>
+      <td align="right">194</td>
+      <td>ISEC.NS</td>
+      <td>ICICI Securities Limited</td>
       </tr>
       <tr>
-        <td align="right">195</td>
-        <td>INDHOTEL.NS</td>
-        <td>The Indian Hotels Company Limited</td>
+      <td align="right">195</td>
+      <td>INDHOTEL.NS</td>
+      <td>The Indian Hotels Company Limited</td>
       </tr>
       <tr>
-        <td align="right">196</td>
-        <td>TATAPOWER.NS</td>
-        <td>Tata Power Company Limited</td>
+      <td align="right">196</td>
+      <td>TATAPOWER.NS</td>
+      <td>Tata Power Company Limited</td>
       </tr>
       <tr>
-        <td align="right">197</td>
-        <td>IOB.NS</td>
-        <td>Indian Overseas Bank</td>
+      <td align="right">197</td>
+      <td>IOB.NS</td>
+      <td>Indian Overseas Bank</td>
       </tr>
       <tr>
-        <td align="right">198</td>
-        <td>THERMAX.NS</td>
-        <td>Thermax Limited</td>
+      <td align="right">198</td>
+      <td>THERMAX.NS</td>
+      <td>Thermax Limited</td>
       </tr>
       <tr>
-        <td align="right">199</td>
-        <td>IIFLWAM.NS</td>
-        <td>Iifl Wealth Management Limited</td>
+      <td align="right">199</td>
+      <td>IIFLWAM.NS</td>
+      <td>Iifl Wealth Management Limited</td>
       </tr>
       <tr>
-        <td align="right">200</td>
-        <td>PHOENIXLTD.NS</td>
-        <td>The Phoenix Mills Limited</td>
+      <td align="right">200</td>
+      <td>PHOENIXLTD.NS</td>
+      <td>The Phoenix Mills Limited</td>
       </tr>
       <tr>
-        <td align="right">201</td>
-        <td>ENDURANCE.NS</td>
-        <td>Endurance Technologies Limited</td>
+      <td align="right">201</td>
+      <td>ENDURANCE.NS</td>
+      <td>Endurance Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">202</td>
-        <td>JINDALSTEL.NS</td>
-        <td>Jindal Steel &amp; Power Limited</td>
+      <td align="right">202</td>
+      <td>JINDALSTEL.NS</td>
+      <td>Jindal Steel &amp; Power Limited</td>
       </tr>
       <tr>
-        <td align="right">203</td>
-        <td>HATSUN.NS</td>
-        <td>Hatsun Agro Product Limited</td>
+      <td align="right">203</td>
+      <td>HATSUN.NS</td>
+      <td>Hatsun Agro Product Limited</td>
       </tr>
       <tr>
-        <td align="right">204</td>
-        <td>SOLARINDS.NS</td>
-        <td>Solar Industries India Limited</td>
+      <td align="right">204</td>
+      <td>SOLARINDS.NS</td>
+      <td>Solar Industries India Limited</td>
       </tr>
       <tr>
-        <td align="right">205</td>
-        <td>FEDERALBNK.NS</td>
-        <td>The Federal Bank Limited</td>
+      <td align="right">205</td>
+      <td>FEDERALBNK.NS</td>
+      <td>The Federal Bank  Limited</td>
       </tr>
       <tr>
-        <td align="right">206</td>
-        <td>AMARAJABAT.NS</td>
-        <td>Amara Raja Batteries Limited</td>
+      <td align="right">206</td>
+      <td>AMARAJABAT.NS</td>
+      <td>Amara Raja Batteries Limited</td>
       </tr>
       <tr>
-        <td align="right">207</td>
-        <td>SJVN.NS</td>
-        <td>SJVN Limited</td>
+      <td align="right">207</td>
+      <td>SJVN.NS</td>
+      <td>SJVN Limited</td>
       </tr>
       <tr>
-        <td align="right">208</td>
-        <td>ESCORTS.NS</td>
-        <td>Escorts Limited</td>
+      <td align="right">208</td>
+      <td>ESCORTS.NS</td>
+      <td>Escorts Limited</td>
       </tr>
       <tr>
-        <td align="right">209</td>
-        <td>MGL.NS</td>
-        <td>Mahanagar Gas Limited</td>
+      <td align="right">209</td>
+      <td>MGL.NS</td>
+      <td>Mahanagar Gas Limited</td>
       </tr>
       <tr>
-        <td align="right">210</td>
-        <td>MANAPPURAM.NS</td>
-        <td>Manappuram Finance Limited</td>
+      <td align="right">210</td>
+      <td>MANAPPURAM.NS</td>
+      <td>Manappuram Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">211</td>
-        <td>VINATIORGA.NS</td>
-        <td>Vinati Organics Limited</td>
+      <td align="right">211</td>
+      <td>VINATIORGA.NS</td>
+      <td>Vinati Organics Limited</td>
       </tr>
       <tr>
-        <td align="right">212</td>
-        <td>UCOBANK.NS</td>
-        <td>UCO Bank</td>
+      <td align="right">212</td>
+      <td>UCOBANK.NS</td>
+      <td>UCO Bank</td>
       </tr>
       <tr>
-        <td align="right">213</td>
-        <td>EMAMILTD.NS</td>
-        <td>Emami Limited</td>
+      <td align="right">213</td>
+      <td>EMAMILTD.NS</td>
+      <td>Emami Limited</td>
       </tr>
       <tr>
-        <td align="right">214</td>
-        <td>ZYDUSWELL.NS</td>
-        <td>Zydus Wellness Limited</td>
+      <td align="right">214</td>
+      <td>ZYDUSWELL.NS</td>
+      <td>Zydus Wellness Limited</td>
       </tr>
       <tr>
-        <td align="right">215</td>
-        <td>MOTILALOFS.NS</td>
-        <td>Motilal Oswal Financial Services Limited</td>
+      <td align="right">215</td>
+      <td>MOTILALOFS.NS</td>
+      <td>Motilal Oswal Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">216</td>
-        <td>SKFINDIA.NS</td>
-        <td>SKF India Limited</td>
+      <td align="right">216</td>
+      <td>SKFINDIA.NS</td>
+      <td>SKF India Limited</td>
       </tr>
       <tr>
-        <td align="right">217</td>
-        <td>BHEL.NS</td>
-        <td>Bharat Heavy Electricals Limited</td>
+      <td align="right">217</td>
+      <td>BHEL.NS</td>
+      <td>Bharat Heavy Electricals Limited</td>
       </tr>
       <tr>
-        <td align="right">218</td>
-        <td>JKCEMENT.NS</td>
-        <td>JK Cement Limited</td>
+      <td align="right">218</td>
+      <td>JKCEMENT.NS</td>
+      <td>JK Cement Limited</td>
       </tr>
       <tr>
-        <td align="right">219</td>
-        <td>NIITTECH.NS</td>
-        <td>NIIT Technologies Limited</td>
+      <td align="right">219</td>
+      <td>NIITTECH.NS</td>
+      <td>NIIT Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">220</td>
-        <td>GODREJAGRO.NS</td>
-        <td>Godrej Agrovet Limited</td>
+      <td align="right">220</td>
+      <td>GODREJAGRO.NS</td>
+      <td>Godrej Agrovet Limited</td>
       </tr>
       <tr>
-        <td align="right">221</td>
-        <td>JSWENERGY.NS</td>
-        <td>JSW Energy Limited</td>
+      <td align="right">221</td>
+      <td>JSWENERGY.NS</td>
+      <td>JSW Energy Limited</td>
       </tr>
       <tr>
-        <td align="right">222</td>
-        <td>CENTRALBK.NS</td>
-        <td>Central Bank of India</td>
+      <td align="right">222</td>
+      <td>CENTRALBK.NS</td>
+      <td>Central Bank of India</td>
       </tr>
       <tr>
-        <td align="right">223</td>
-        <td>RBLBANK.NS</td>
-        <td>RBL Bank Limited</td>
+      <td align="right">223</td>
+      <td>RBLBANK.NS</td>
+      <td>RBL Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">224</td>
-        <td>HEXAWARE.NS</td>
-        <td>Hexaware Technologies Limited</td>
+      <td align="right">224</td>
+      <td>HEXAWARE.NS</td>
+      <td>Hexaware Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">225</td>
-        <td>TTKPRESTIG.NS</td>
-        <td>TTK Prestige Limited</td>
+      <td align="right">225</td>
+      <td>TTKPRESTIG.NS</td>
+      <td>TTK Prestige Limited</td>
       </tr>
       <tr>
-        <td align="right">226</td>
-        <td>PRESTIGE.NS</td>
-        <td>Prestige Estates Projects Limited</td>
+      <td align="right">226</td>
+      <td>PRESTIGE.NS</td>
+      <td>Prestige Estates Projects Limited</td>
       </tr>
       <tr>
-        <td align="right">227</td>
-        <td>TATACOMM.NS</td>
-        <td>Tata Communications Limited</td>
+      <td align="right">227</td>
+      <td>TATACOMM.NS</td>
+      <td>Tata Communications Limited</td>
       </tr>
       <tr>
-        <td align="right">228</td>
-        <td>VGUARD.NS</td>
-        <td>V-Guard Industries Limited</td>
+      <td align="right">228</td>
+      <td>VGUARD.NS</td>
+      <td>V-Guard Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">229</td>
-        <td>METROPOLIS.NS</td>
-        <td>Metropolis Healthcare Limited</td>
+      <td align="right">229</td>
+      <td>METROPOLIS.NS</td>
+      <td>Metropolis Healthcare Limited</td>
       </tr>
       <tr>
-        <td align="right">230</td>
-        <td>SIS.NS</td>
-        <td>Security and Intelligence Services (India) Limited</td>
+      <td align="right">230</td>
+      <td>SIS.NS</td>
+      <td>Security and Intelligence Services (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">231</td>
-        <td>MINDAIND.NS</td>
-        <td>Minda Industries Limited</td>
+      <td align="right">231</td>
+      <td>MINDAIND.NS</td>
+      <td>Minda Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">232</td>
-        <td>SFL.NS</td>
-        <td>Sheela Foam Limited</td>
+      <td align="right">232</td>
+      <td>SFL.NS</td>
+      <td>Sheela Foam Limited</td>
       </tr>
       <tr>
-        <td align="right">233</td>
-        <td>RITES.NS</td>
-        <td>RITES Limited</td>
+      <td align="right">233</td>
+      <td>RITES.NS</td>
+      <td>RITES Limited</td>
       </tr>
       <tr>
-        <td align="right">234</td>
-        <td>SUNDRMFAST.NS</td>
-        <td>Sundram Fasteners Limited</td>
+      <td align="right">234</td>
+      <td>SUNDRMFAST.NS</td>
+      <td>Sundram Fasteners Limited</td>
       </tr>
       <tr>
-        <td align="right">235</td>
-        <td>NLCINDIA.NS</td>
-        <td>NLC India Limited</td>
+      <td align="right">235</td>
+      <td>NLCINDIA.NS</td>
+      <td>NLC India Limited</td>
       </tr>
       <tr>
-        <td align="right">236</td>
-        <td>PVR.NS</td>
-        <td>PVR Limited</td>
+      <td align="right">236</td>
+      <td>PVR.NS</td>
+      <td>PVR Limited</td>
       </tr>
       <tr>
-        <td align="right">237</td>
-        <td>NAVINFLUOR.NS</td>
-        <td>Navin Fluorine International Limited</td>
+      <td align="right">237</td>
+      <td>NAVINFLUOR.NS</td>
+      <td>Navin Fluorine International Limited</td>
       </tr>
       <tr>
-        <td align="right">238</td>
-        <td>PGHL.NS</td>
-        <td>Procter &amp; Gamble Health Limited</td>
+      <td align="right">238</td>
+      <td>PGHL.NS</td>
+      <td>Procter &amp; Gamble Health Limited</td>
       </tr>
       <tr>
-        <td align="right">239</td>
-        <td>ASTRAZEN.NS</td>
-        <td>AstraZeneca Pharma India Limited</td>
+      <td align="right">239</td>
+      <td>ASTRAZEN.NS</td>
+      <td>AstraZeneca Pharma India Limited</td>
       </tr>
       <tr>
-        <td align="right">240</td>
-        <td>KAJARIACER.NS</td>
-        <td>Kajaria Ceramics Limited</td>
+      <td align="right">240</td>
+      <td>KAJARIACER.NS</td>
+      <td>Kajaria Ceramics Limited</td>
       </tr>
       <tr>
-        <td align="right">241</td>
-        <td>FINEORG.NS</td>
-        <td>Fine Organic Industries Limited</td>
+      <td align="right">241</td>
+      <td>FINEORG.NS</td>
+      <td>Fine Organic Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">242</td>
-        <td>JCHAC.NS</td>
-        <td>Johnson Controls - Hitachi Air Conditioning India Limited</td>
+      <td align="right">242</td>
+      <td>JCHAC.NS</td>
+      <td>Johnson Controls - Hitachi Air Conditioning India Limited</td>
       </tr>
       <tr>
-        <td align="right">243</td>
-        <td>GLENMARK.NS</td>
-        <td>Glenmark Pharmaceuticals Limited</td>
+      <td align="right">243</td>
+      <td>GLENMARK.NS</td>
+      <td>Glenmark Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">244</td>
-        <td>TIMKEN.NS</td>
-        <td>Timken India Limited</td>
+      <td align="right">244</td>
+      <td>TIMKEN.NS</td>
+      <td>Timken India Limited</td>
       </tr>
       <tr>
-        <td align="right">245</td>
-        <td>TATACHEM.NS</td>
-        <td>Tata Chemicals Limited</td>
+      <td align="right">245</td>
+      <td>TATACHEM.NS</td>
+      <td>Tata Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">246</td>
-        <td>IBVENTURES.NS</td>
-        <td>Indiabulls Ventures Limited</td>
+      <td align="right">246</td>
+      <td>IBVENTURES.NS</td>
+      <td>Indiabulls Ventures Limited</td>
       </tr>
       <tr>
-        <td align="right">247</td>
-        <td>ITI.NS</td>
-        <td>ITI Limited</td>
+      <td align="right">247</td>
+      <td>ITI.NS</td>
+      <td>ITI Limited</td>
       </tr>
       <tr>
-        <td align="right">248</td>
-        <td>INDIAMART.NS</td>
-        <td>Indiamart Intermesh Limited</td>
+      <td align="right">248</td>
+      <td>INDIAMART.NS</td>
+      <td>Indiamart Intermesh Limited</td>
       </tr>
       <tr>
-        <td align="right">249</td>
-        <td>SYMPHONY.NS</td>
-        <td>Symphony Limited</td>
+      <td align="right">249</td>
+      <td>SYMPHONY.NS</td>
+      <td>Symphony Limited</td>
       </tr>
       <tr>
-        <td align="right">250</td>
-        <td>JMFINANCIL.NS</td>
-        <td>JM Financial Limited</td>
+      <td align="right">250</td>
+      <td>JMFINANCIL.NS</td>
+      <td>JM Financial Limited</td>
       </tr>
       <tr>
-        <td align="right">251</td>
-        <td>CHOLAHLDNG.NS</td>
-        <td>Cholamandalam Financial Holdings Limited</td>
+      <td align="right">251</td>
+      <td>CHOLAHLDNG.NS</td>
+      <td>Cholamandalam Financial Holdings Limited</td>
       </tr>
       <tr>
-        <td align="right">252</td>
-        <td>NATIONALUM.NS</td>
-        <td>National Aluminium Company Limited</td>
+      <td align="right">252</td>
+      <td>NATIONALUM.NS</td>
+      <td>National Aluminium Company Limited</td>
       </tr>
       <tr>
-        <td align="right">253</td>
-        <td>CESC.NS</td>
-        <td>CESC Limited</td>
+      <td align="right">253</td>
+      <td>CESC.NS</td>
+      <td>CESC Limited</td>
       </tr>
       <tr>
-        <td align="right">254</td>
-        <td>DEEPAKNTR.NS</td>
-        <td>Deepak Nitrite Limited</td>
+      <td align="right">254</td>
+      <td>DEEPAKNTR.NS</td>
+      <td>Deepak Nitrite Limited</td>
       </tr>
       <tr>
-        <td align="right">255</td>
-        <td>BLUEDART.NS</td>
-        <td>Blue Dart Express Limited</td>
+      <td align="right">255</td>
+      <td>BLUEDART.NS</td>
+      <td>Blue Dart Express Limited</td>
       </tr>
       <tr>
-        <td align="right">256</td>
-        <td>MAHABANK.NS</td>
-        <td>Bank of Maharashtra</td>
+      <td align="right">256</td>
+      <td>MAHABANK.NS</td>
+      <td>Bank of Maharashtra</td>
       </tr>
       <tr>
-        <td align="right">257</td>
-        <td>TIINDIA.NS</td>
-        <td>Tube Investments of India Limited</td>
+      <td align="right">257</td>
+      <td>TIINDIA.NS</td>
+      <td>Tube Investments of India Limited</td>
       </tr>
       <tr>
-        <td align="right">258</td>
-        <td>BBTC.NS</td>
-        <td>Bombay Burmah Trading Corporation Limited</td>
+      <td align="right">258</td>
+      <td>BBTC.NS</td>
+      <td>Bombay Burmah Trading Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">259</td>
-        <td>ERIS.NS</td>
-        <td>Eris Lifesciences Limited</td>
+      <td align="right">259</td>
+      <td>ERIS.NS</td>
+      <td>Eris Lifesciences Limited</td>
       </tr>
       <tr>
-        <td align="right">260</td>
-        <td>NH.NS</td>
-        <td>Narayana Hrudayalaya Ltd.</td>
+      <td align="right">260</td>
+      <td>NH.NS</td>
+      <td>Narayana Hrudayalaya Ltd.</td>
       </tr>
       <tr>
-        <td align="right">261</td>
-        <td>GRINDWELL.NS</td>
-        <td>Grindwell Norton Limited</td>
+      <td align="right">261</td>
+      <td>GRINDWELL.NS</td>
+      <td>Grindwell Norton Limited</td>
       </tr>
       <tr>
-        <td align="right">262</td>
-        <td>SHRIRAMCIT.NS</td>
-        <td>Shriram City Union Finance Limited</td>
+      <td align="right">262</td>
+      <td>SHRIRAMCIT.NS</td>
+      <td>Shriram City Union Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">263</td>
-        <td>ESSELPACK.NS</td>
-        <td>Essel Propack Limited</td>
+      <td align="right">263</td>
+      <td>ESSELPACK.NS</td>
+      <td>Essel Propack Limited</td>
       </tr>
       <tr>
-        <td align="right">264</td>
-        <td>GODFRYPHLP.NS</td>
-        <td>Godfrey Phillips India Limited</td>
+      <td align="right">264</td>
+      <td>GODFRYPHLP.NS</td>
+      <td>Godfrey Phillips India Limited</td>
       </tr>
       <tr>
-        <td align="right">265</td>
-        <td>FINPIPE.NS</td>
-        <td>Finolex Industries Limited</td>
+      <td align="right">265</td>
+      <td>FINPIPE.NS</td>
+      <td>Finolex Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">266</td>
-        <td>BASF.NS</td>
-        <td>BASF India Limited</td>
+      <td align="right">266</td>
+      <td>BASF.NS</td>
+      <td>BASF India Limited</td>
       </tr>
       <tr>
-        <td align="right">267</td>
-        <td>CREDITACC.NS</td>
-        <td>CREDITACCESS GRAMEEN LIMITED</td>
+      <td align="right">267</td>
+      <td>CREDITACC.NS</td>
+      <td>CREDITACCESS GRAMEEN LIMITED</td>
       </tr>
       <tr>
-        <td align="right">268</td>
-        <td>ASTERDM.NS</td>
-        <td>Aster DM Healthcare Limited</td>
+      <td align="right">268</td>
+      <td>ASTERDM.NS</td>
+      <td>Aster DM Healthcare Limited</td>
       </tr>
       <tr>
-        <td align="right">269</td>
-        <td>KEC.NS</td>
-        <td>KEC International Limited</td>
+      <td align="right">269</td>
+      <td>KEC.NS</td>
+      <td>KEC International Limited</td>
       </tr>
       <tr>
-        <td align="right">270</td>
-        <td>AEGISCHEM.NS</td>
-        <td>Aegis Logistics Limited</td>
+      <td align="right">270</td>
+      <td>AEGISCHEM.NS</td>
+      <td>Aegis Logistics Limited</td>
       </tr>
       <tr>
-        <td align="right">271</td>
-        <td>UJJIVANSFB.NS</td>
-        <td>Ujjivan Small Finance Bank Limited</td>
+      <td align="right">271</td>
+      <td>UJJIVANSFB.NS</td>
+      <td>Ujjivan Small Finance Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">272</td>
-        <td>APOLLOTYRE.NS</td>
-        <td>Apollo Tyres Limited</td>
+      <td align="right">272</td>
+      <td>APOLLOTYRE.NS</td>
+      <td>Apollo Tyres Limited</td>
       </tr>
       <tr>
-        <td align="right">273</td>
-        <td>CHAMBLFERT.NS</td>
-        <td>Chambal Fertilizers &amp; Chemicals Limited</td>
+      <td align="right">273</td>
+      <td>CHAMBLFERT.NS</td>
+      <td>Chambal Fertilizers &amp; Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">274</td>
-        <td>BLUESTARCO.NS</td>
-        <td>Blue Star Limited</td>
+      <td align="right">274</td>
+      <td>BLUESTARCO.NS</td>
+      <td>Blue Star Limited</td>
       </tr>
       <tr>
-        <td align="right">275</td>
-        <td>VSTIND.NS</td>
-        <td>VST Industries Limited</td>
+      <td align="right">275</td>
+      <td>VSTIND.NS</td>
+      <td>VST Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">276</td>
-        <td>RATNAMANI.NS</td>
-        <td>Ratnamani Metals &amp; Tubes Limited</td>
+      <td align="right">276</td>
+      <td>RATNAMANI.NS</td>
+      <td>Ratnamani Metals &amp; Tubes Limited</td>
       </tr>
       <tr>
-        <td align="right">277</td>
-        <td>PERSISTENT.NS</td>
-        <td>Persistent Systems Limited</td>
+      <td align="right">277</td>
+      <td>PERSISTENT.NS</td>
+      <td>Persistent Systems Limited</td>
       </tr>
       <tr>
-        <td align="right">278</td>
-        <td>CHALET.NS</td>
-        <td>Chalet Hotels Limited</td>
+      <td align="right">278</td>
+      <td>CHALET.NS</td>
+      <td>Chalet Hotels Limited</td>
       </tr>
       <tr>
-        <td align="right">279</td>
-        <td>CARBORUNIV.NS</td>
-        <td>Carborundum Universal Limited</td>
+      <td align="right">279</td>
+      <td>CARBORUNIV.NS</td>
+      <td>Carborundum Universal Limited</td>
       </tr>
       <tr>
-        <td align="right">280</td>
-        <td>GALAXYSURF.NS</td>
-        <td>Galaxy Surfactants Limited</td>
+      <td align="right">280</td>
+      <td>GALAXYSURF.NS</td>
+      <td>Galaxy Surfactants Limited</td>
       </tr>
       <tr>
-        <td align="right">281</td>
-        <td>ORIENTELEC.NS</td>
-        <td>Orient Electric Limited</td>
+      <td align="right">281</td>
+      <td>ORIENTELEC.NS</td>
+      <td>Orient Electric Limited</td>
       </tr>
       <tr>
-        <td align="right">282</td>
-        <td>DIXON.NS</td>
-        <td>Dixon Technologies (India) Limited</td>
+      <td align="right">282</td>
+      <td>DIXON.NS</td>
+      <td>Dixon Technologies (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">283</td>
-        <td>LINDEINDIA.NS</td>
-        <td>Linde India Limited</td>
+      <td align="right">283</td>
+      <td>LINDEINDIA.NS</td>
+      <td>Linde India Limited</td>
       </tr>
       <tr>
-        <td align="right">284</td>
-        <td>IBULHSGFIN.NS</td>
-        <td>Indiabulls Housing Finance Limited</td>
+      <td align="right">284</td>
+      <td>IBULHSGFIN.NS</td>
+      <td>Indiabulls Housing Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">285</td>
-        <td>JBCHEPHARM.NS</td>
-        <td>JB Chemicals &amp; Pharmaceuticals Limited</td>
+      <td align="right">285</td>
+      <td>JBCHEPHARM.NS</td>
+      <td>JB Chemicals &amp; Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">286</td>
-        <td>MRPL.NS</td>
-        <td>Mangalore Refinery and Petrochemicals Limited</td>
+      <td align="right">286</td>
+      <td>MRPL.NS</td>
+      <td>Mangalore Refinery and Petrochemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">287</td>
-        <td>AVANTIFEED.NS</td>
-        <td>Avanti Feeds Limited</td>
+      <td align="right">287</td>
+      <td>AVANTIFEED.NS</td>
+      <td>Avanti Feeds Limited</td>
       </tr>
       <tr>
-        <td align="right">288</td>
-        <td>HUDCO.NS</td>
-        <td>Housing &amp; Urban Development Corporation Limited</td>
+      <td align="right">288</td>
+      <td>HUDCO.NS</td>
+      <td>Housing &amp; Urban Development Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">289</td>
-        <td>JUBILANT.NS</td>
-        <td>Jubilant Life Sciences Limited</td>
+      <td align="right">289</td>
+      <td>JUBILANT.NS</td>
+      <td>Jubilant Life Sciences Limited</td>
       </tr>
       <tr>
-        <td align="right">290</td>
-        <td>FRETAIL.NS</td>
-        <td>Future Retail Limited</td>
+      <td align="right">290</td>
+      <td>FRETAIL.NS</td>
+      <td>Future Retail Limited</td>
       </tr>
       <tr>
-        <td align="right">291</td>
-        <td>TATAELXSI.NS</td>
-        <td>Tata Elxsi Limited</td>
+      <td align="right">291</td>
+      <td>TATAELXSI.NS</td>
+      <td>Tata Elxsi Limited</td>
       </tr>
       <tr>
-        <td align="right">292</td>
-        <td>AMBER.NS</td>
-        <td>Amber Enterprises India Limited</td>
+      <td align="right">292</td>
+      <td>AMBER.NS</td>
+      <td>Amber Enterprises India Limited</td>
       </tr>
       <tr>
-        <td align="right">293</td>
-        <td>IEX.NS</td>
-        <td>Indian Energy Exchange Limited</td>
+      <td align="right">293</td>
+      <td>IEX.NS</td>
+      <td>Indian Energy Exchange Limited</td>
       </tr>
       <tr>
-        <td align="right">294</td>
-        <td>ASAHIINDIA.NS</td>
-        <td>Asahi India Glass Limited</td>
+      <td align="right">294</td>
+      <td>ASAHIINDIA.NS</td>
+      <td>Asahi India Glass Limited</td>
       </tr>
       <tr>
-        <td align="right">295</td>
-        <td>ENGINERSIN.NS</td>
-        <td>Engineers India Limited</td>
+      <td align="right">295</td>
+      <td>ENGINERSIN.NS</td>
+      <td>Engineers India Limited</td>
       </tr>
       <tr>
-        <td align="right">296</td>
-        <td>SPANDANA.NS</td>
-        <td>Spandana Sphoorty Financial Limited</td>
+      <td align="right">296</td>
+      <td>SPANDANA.NS</td>
+      <td>Spandana Sphoorty Financial Limited</td>
       </tr>
       <tr>
-        <td align="right">297</td>
-        <td>EIHOTEL.NS</td>
-        <td>EIH Limited</td>
+      <td align="right">297</td>
+      <td>EIHOTEL.NS</td>
+      <td>EIH Limited</td>
       </tr>
       <tr>
-        <td align="right">298</td>
-        <td>CANFINHOME.NS</td>
-        <td>Can Fin Homes Limited</td>
+      <td align="right">298</td>
+      <td>CANFINHOME.NS</td>
+      <td>Can Fin Homes Limited</td>
       </tr>
       <tr>
-        <td align="right">299</td>
-        <td>KIOCL.NS</td>
-        <td>KIOCL Limited</td>
+      <td align="right">299</td>
+      <td>KIOCL.NS</td>
+      <td>KIOCL Limited</td>
       </tr>
       <tr>
-        <td align="right">300</td>
-        <td>GMMPFAUDLR.NS</td>
-        <td>GMM Pfaudler Limited</td>
+      <td align="right">300</td>
+      <td>GMMPFAUDLR.NS</td>
+      <td>GMM Pfaudler Limited</td>
       </tr>
       <tr>
-        <td align="right">301</td>
-        <td>GRANULES.NS</td>
-        <td>Granules India Limited</td>
+      <td align="right">301</td>
+      <td>GRANULES.NS</td>
+      <td>Granules India Limited</td>
       </tr>
       <tr>
-        <td align="right">302</td>
-        <td>VTL.NS</td>
-        <td>Vardhman Textiles Limited</td>
+      <td align="right">302</td>
+      <td>VTL.NS</td>
+      <td>Vardhman Textiles Limited</td>
       </tr>
       <tr>
-        <td align="right">303</td>
-        <td>EDELWEISS.NS</td>
-        <td>Edelweiss Financial Services Limited</td>
+      <td align="right">303</td>
+      <td>EDELWEISS.NS</td>
+      <td>Edelweiss Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">304</td>
-        <td>IRCON.NS</td>
-        <td>Ircon International Limited</td>
+      <td align="right">304</td>
+      <td>IRCON.NS</td>
+      <td>Ircon International Limited</td>
       </tr>
       <tr>
-        <td align="right">305</td>
-        <td>RADICO.NS</td>
-        <td>Radico Khaitan Limited</td>
+      <td align="right">305</td>
+      <td>RADICO.NS</td>
+      <td>Radico Khaitan Limited</td>
       </tr>
       <tr>
-        <td align="right">306</td>
-        <td>COCHINSHIP.NS</td>
-        <td>Cochin Shipyard Limited</td>
+      <td align="right">306</td>
+      <td>COCHINSHIP.NS</td>
+      <td>Cochin Shipyard Limited</td>
       </tr>
       <tr>
-        <td align="right">307</td>
-        <td>LAURUSLABS.NS</td>
-        <td>Laurus Labs Limited</td>
+      <td align="right">307</td>
+      <td>LAURUSLABS.NS</td>
+      <td>Laurus Labs Limited</td>
       </tr>
       <tr>
-        <td align="right">308</td>
-        <td>NESCO.NS</td>
-        <td>Nesco Limited</td>
+      <td align="right">308</td>
+      <td>NESCO.NS</td>
+      <td>Nesco Limited</td>
       </tr>
       <tr>
-        <td align="right">309</td>
-        <td>RALLIS.NS</td>
-        <td>Rallis India Limited</td>
+      <td align="right">309</td>
+      <td>RALLIS.NS</td>
+      <td>Rallis India Limited</td>
       </tr>
       <tr>
-        <td align="right">310</td>
-        <td>VIPIND.NS</td>
-        <td>VIP Industries Limited</td>
+      <td align="right">310</td>
+      <td>VIPIND.NS</td>
+      <td>VIP Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">311</td>
-        <td>BDL.NS</td>
-        <td>Bharat Dynamics Limited</td>
+      <td align="right">311</td>
+      <td>BDL.NS</td>
+      <td>Bharat Dynamics Limited</td>
       </tr>
       <tr>
-        <td align="right">312</td>
-        <td>JYOTHYLAB.NS</td>
-        <td>Jyothy Labs Limited</td>
+      <td align="right">312</td>
+      <td>JYOTHYLAB.NS</td>
+      <td>Jyothy Labs Limited</td>
       </tr>
       <tr>
-        <td align="right">313</td>
-        <td>DCMSHRIRAM.NS</td>
-        <td>DCM Shriram Limited</td>
+      <td align="right">313</td>
+      <td>DCMSHRIRAM.NS</td>
+      <td>DCM Shriram Limited</td>
       </tr>
       <tr>
-        <td align="right">314</td>
-        <td>TATAINVEST.NS</td>
-        <td>Tata Investment Corporation Limited</td>
+      <td align="right">314</td>
+      <td>TATAINVEST.NS</td>
+      <td>Tata Investment Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">315</td>
-        <td>MIDHANI.NS</td>
-        <td>Mishra Dhatu Nigam Limited</td>
+      <td align="right">315</td>
+      <td>MIDHANI.NS</td>
+      <td>Mishra Dhatu Nigam Limited</td>
       </tr>
       <tr>
-        <td align="right">316</td>
-        <td>FDC.NS</td>
-        <td>FDC Limited</td>
+      <td align="right">316</td>
+      <td>FDC.NS</td>
+      <td>FDC Limited</td>
       </tr>
       <tr>
-        <td align="right">317</td>
-        <td>CENTURYTEX.NS</td>
-        <td>Century Textiles &amp; Industries Limited</td>
+      <td align="right">317</td>
+      <td>CENTURYTEX.NS</td>
+      <td>Century Textiles &amp; Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">318</td>
-        <td>INDIACEM.NS</td>
-        <td>The India Cements Limited</td>
+      <td align="right">318</td>
+      <td>INDIACEM.NS</td>
+      <td>The India Cements Limited</td>
       </tr>
       <tr>
-        <td align="right">319</td>
-        <td>HEIDELBERG.NS</td>
-        <td>HeidelbergCement India Limited</td>
+      <td align="right">319</td>
+      <td>HEIDELBERG.NS</td>
+      <td>HeidelbergCement India Limited</td>
       </tr>
       <tr>
-        <td align="right">320</td>
-        <td>CEATLTD.NS</td>
-        <td>CEAT Limited</td>
+      <td align="right">320</td>
+      <td>CEATLTD.NS</td>
+      <td>CEAT Limited</td>
       </tr>
       <tr>
-        <td align="right">321</td>
-        <td>BIRLACORPN.NS</td>
-        <td>Birla Corporation Limited</td>
+      <td align="right">321</td>
+      <td>BIRLACORPN.NS</td>
+      <td>Birla Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">322</td>
-        <td>GEPIL.NS</td>
-        <td>GE Power India Limited</td>
+      <td align="right">322</td>
+      <td>GEPIL.NS</td>
+      <td>GE Power India Limited</td>
       </tr>
       <tr>
-        <td align="right">323</td>
-        <td>POWERINDIA.NS</td>
-        <td>ABB Power Products and Systems India Limited</td>
+      <td align="right">323</td>
+      <td>POWERINDIA.NS</td>
+      <td>ABB Power Products and Systems India Limited</td>
       </tr>
       <tr>
-        <td align="right">324</td>
-        <td>KRBL.NS</td>
-        <td>KRBL Limited</td>
+      <td align="right">324</td>
+      <td>KRBL.NS</td>
+      <td>KRBL Limited</td>
       </tr>
       <tr>
-        <td align="right">325</td>
-        <td>QUESS.NS</td>
-        <td>Quess Corp Limited</td>
+      <td align="right">325</td>
+      <td>QUESS.NS</td>
+      <td>Quess Corp Limited</td>
       </tr>
       <tr>
-        <td align="right">326</td>
-        <td>FLUOROCHEM.NS</td>
-        <td>Gujarat Fluorochemicals Limited</td>
+      <td align="right">326</td>
+      <td>FLUOROCHEM.NS</td>
+      <td>Gujarat Fluorochemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">327</td>
-        <td>FINCABLES.NS</td>
-        <td>Finolex Cables Limited</td>
+      <td align="right">327</td>
+      <td>FINCABLES.NS</td>
+      <td>Finolex Cables Limited</td>
       </tr>
       <tr>
-        <td align="right">328</td>
-        <td>APLAPOLLO.NS</td>
-        <td>APL Apollo Tubes Limited</td>
+      <td align="right">328</td>
+      <td>APLAPOLLO.NS</td>
+      <td>APL Apollo Tubes Limited</td>
       </tr>
       <tr>
-        <td align="right">329</td>
-        <td>SUNTECK.NS</td>
-        <td>Sunteck Realty Limited</td>
+      <td align="right">329</td>
+      <td>SUNTECK.NS</td>
+      <td>Sunteck Realty Limited</td>
       </tr>
       <tr>
-        <td align="right">330</td>
-        <td>BAJAJELEC.NS</td>
-        <td>Bajaj Electricals Limited</td>
+      <td align="right">330</td>
+      <td>BAJAJELEC.NS</td>
+      <td>Bajaj Electricals Limited</td>
       </tr>
       <tr>
-        <td align="right">331</td>
-        <td>GESHIP.NS</td>
-        <td>The Great Eastern Shipping Company Limited</td>
+      <td align="right">331</td>
+      <td>GESHIP.NS</td>
+      <td>The Great Eastern Shipping Company Limited</td>
       </tr>
       <tr>
-        <td align="right">332</td>
-        <td>SUNCLAYLTD.NS</td>
-        <td>Sundaram Clayton Limited</td>
+      <td align="right">332</td>
+      <td>SUNCLAYLTD.NS</td>
+      <td>Sundaram Clayton Limited</td>
       </tr>
       <tr>
-        <td align="right">333</td>
-        <td>CERA.NS</td>
-        <td>Cera Sanitaryware Limited</td>
+      <td align="right">333</td>
+      <td>CERA.NS</td>
+      <td>Cera Sanitaryware Limited</td>
       </tr>
       <tr>
-        <td align="right">334</td>
-        <td>CGCL.NS</td>
-        <td>Capri Global Capital Limited</td>
+      <td align="right">334</td>
+      <td>CGCL.NS</td>
+      <td>Capri Global Capital Limited</td>
       </tr>
       <tr>
-        <td align="right">335</td>
-        <td>DCBBANK.NS</td>
-        <td>DCB Bank Limited</td>
+      <td align="right">335</td>
+      <td>DCBBANK.NS</td>
+      <td>DCB Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">336</td>
-        <td>NBCC.NS</td>
-        <td>NBCC (India) Limited</td>
+      <td align="right">336</td>
+      <td>NBCC.NS</td>
+      <td>NBCC (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">337</td>
-        <td>GPPL.NS</td>
-        <td>Gujarat Pipavav Port Limited</td>
+      <td align="right">337</td>
+      <td>GPPL.NS</td>
+      <td>Gujarat Pipavav Port Limited</td>
       </tr>
       <tr>
-        <td align="right">338</td>
-        <td>DBL.NS</td>
-        <td>Dilip Buildcon Limited</td>
+      <td align="right">338</td>
+      <td>DBL.NS</td>
+      <td>Dilip Buildcon Limited</td>
       </tr>
       <tr>
-        <td align="right">339</td>
-        <td>STAR.NS</td>
-        <td>Strides Pharma Science Limited</td>
+      <td align="right">339</td>
+      <td>STAR.NS</td>
+      <td>Strides Pharma Science Limited</td>
       </tr>
       <tr>
-        <td align="right">340</td>
-        <td>MASFIN.NS</td>
-        <td>MAS Financial Services Limited</td>
+      <td align="right">340</td>
+      <td>MASFIN.NS</td>
+      <td>MAS Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">341</td>
-        <td>KALPATPOWR.NS</td>
-        <td>Kalpataru Power Transmission Limited</td>
+      <td align="right">341</td>
+      <td>KALPATPOWR.NS</td>
+      <td>Kalpataru Power Transmission Limited</td>
       </tr>
       <tr>
-        <td align="right">342</td>
-        <td>STARCEMENT.NS</td>
-        <td>Star Cement Limited</td>
+      <td align="right">342</td>
+      <td>STARCEMENT.NS</td>
+      <td>Star Cement Limited</td>
       </tr>
       <tr>
-        <td align="right">343</td>
-        <td>OMAXE.NS</td>
-        <td>Omaxe Limited</td>
+      <td align="right">343</td>
+      <td>OMAXE.NS</td>
+      <td>Omaxe Limited</td>
       </tr>
       <tr>
-        <td align="right">344</td>
-        <td>TEAMLEASE.NS</td>
-        <td>Teamlease Services Limited</td>
+      <td align="right">344</td>
+      <td>TEAMLEASE.NS</td>
+      <td>Teamlease Services Limited</td>
       </tr>
       <tr>
-        <td align="right">345</td>
-        <td>KNRCON.NS</td>
-        <td>KNR Constructions Limited</td>
+      <td align="right">345</td>
+      <td>KNRCON.NS</td>
+      <td>KNR Constructions Limited</td>
       </tr>
       <tr>
-        <td align="right">346</td>
-        <td>PNBHOUSING.NS</td>
-        <td>PNB Housing Finance Limited</td>
+      <td align="right">346</td>
+      <td>PNBHOUSING.NS</td>
+      <td>PNB Housing Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">347</td>
-        <td>INOXLEISUR.NS</td>
-        <td>INOX Leisure Limited</td>
+      <td align="right">347</td>
+      <td>INOXLEISUR.NS</td>
+      <td>INOX Leisure Limited</td>
       </tr>
       <tr>
-        <td align="right">348</td>
-        <td>TV18BRDCST.NS</td>
-        <td>TV18 Broadcast Limited</td>
+      <td align="right">348</td>
+      <td>TV18BRDCST.NS</td>
+      <td>TV18 Broadcast Limited</td>
       </tr>
       <tr>
-        <td align="right">349</td>
-        <td>REDINGTON.NS</td>
-        <td>Redington (India) Limited</td>
+      <td align="right">349</td>
+      <td>REDINGTON.NS</td>
+      <td>Redington (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">350</td>
-        <td>RVNL.NS</td>
-        <td>Rail Vikas Nigam Limited</td>
+      <td align="right">350</td>
+      <td>RVNL.NS</td>
+      <td>Rail Vikas Nigam Limited</td>
       </tr>
       <tr>
-        <td align="right">351</td>
-        <td>BRIGADE.NS</td>
-        <td>Brigade Enterprises Limited</td>
+      <td align="right">351</td>
+      <td>BRIGADE.NS</td>
+      <td>Brigade Enterprises Limited</td>
       </tr>
       <tr>
-        <td align="right">352</td>
-        <td>INDIANB.NS</td>
-        <td>Indian Bank</td>
+      <td align="right">352</td>
+      <td>INDIANB.NS</td>
+      <td>Indian Bank</td>
       </tr>
       <tr>
-        <td align="right">353</td>
-        <td>THYROCARE.NS</td>
-        <td>Thyrocare Technologies Limited</td>
+      <td align="right">353</td>
+      <td>THYROCARE.NS</td>
+      <td>Thyrocare Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">354</td>
-        <td>TECHNOE.NS</td>
-        <td>Techno Electric &amp; Engineering Company Limited</td>
+      <td align="right">354</td>
+      <td>TECHNOE.NS</td>
+      <td>Techno Electric &amp; Engineering Company Limited</td>
       </tr>
       <tr>
-        <td align="right">355</td>
-        <td>MAHINDCIE.NS</td>
-        <td>Mahindra CIE Automotive Limited</td>
+      <td align="right">355</td>
+      <td>MAHINDCIE.NS</td>
+      <td>Mahindra CIE Automotive Limited</td>
       </tr>
       <tr>
-        <td align="right">356</td>
-        <td>VMART.NS</td>
-        <td>V-Mart Retail Limited</td>
+      <td align="right">356</td>
+      <td>VMART.NS</td>
+      <td>V-Mart Retail Limited</td>
       </tr>
       <tr>
-        <td align="right">357</td>
-        <td>GULFOILLUB.NS</td>
-        <td>Gulf Oil Lubricants India Limited</td>
+      <td align="right">357</td>
+      <td>GULFOILLUB.NS</td>
+      <td>Gulf Oil Lubricants India Limited</td>
       </tr>
       <tr>
-        <td align="right">358</td>
-        <td>SUDARSCHEM.NS</td>
-        <td>Sudarshan Chemical Industries Limited</td>
+      <td align="right">358</td>
+      <td>SUDARSCHEM.NS</td>
+      <td>Sudarshan Chemical Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">359</td>
-        <td>STRTECH.NS</td>
-        <td>Sterlite Technologies Limited</td>
+      <td align="right">359</td>
+      <td>STRTECH.NS</td>
+      <td>Sterlite Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">360</td>
-        <td>AFFLE.NS</td>
-        <td>Affle (India) Limited</td>
+      <td align="right">360</td>
+      <td>AFFLE.NS</td>
+      <td>Affle (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">361</td>
-        <td>SUVENPHAR.NS</td>
-        <td>Suven Pharmaceuticals Limited</td>
+      <td align="right">361</td>
+      <td>SUVENPHAR.NS</td>
+      <td>Suven Pharmaceuticals Limited</td>
       </tr>
       <tr>
-        <td align="right">362</td>
-        <td>SPARC.NS</td>
-        <td>Sun Pharma Advanced Research Company Limited</td>
+      <td align="right">362</td>
+      <td>SPARC.NS</td>
+      <td>Sun Pharma Advanced Research Company Limited</td>
       </tr>
       <tr>
-        <td align="right">363</td>
-        <td>CYIENT.NS</td>
-        <td>Cyient Limited</td>
+      <td align="right">363</td>
+      <td>CYIENT.NS</td>
+      <td>Cyient Limited</td>
       </tr>
       <tr>
-        <td align="right">364</td>
-        <td>GRAPHITE.NS</td>
-        <td>Graphite India Limited</td>
+      <td align="right">364</td>
+      <td>GRAPHITE.NS</td>
+      <td>Graphite India Limited</td>
       </tr>
       <tr>
-        <td align="right">365</td>
-        <td>VAIBHAVGBL.NS</td>
-        <td>Vaibhav Global Limited</td>
+      <td align="right">365</td>
+      <td>VAIBHAVGBL.NS</td>
+      <td>Vaibhav Global Limited</td>
       </tr>
       <tr>
-        <td align="right">366</td>
-        <td>CENTURYPLY.NS</td>
-        <td>Century Plyboards (India) Limited</td>
+      <td align="right">366</td>
+      <td>CENTURYPLY.NS</td>
+      <td>Century Plyboards (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">367</td>
-        <td>SWANENERGY.NS</td>
-        <td>Swan Energy Limited</td>
+      <td align="right">367</td>
+      <td>SWANENERGY.NS</td>
+      <td>Swan Energy Limited</td>
       </tr>
       <tr>
-        <td align="right">368</td>
-        <td>EIDPARRY.NS</td>
-        <td>EID Parry India Limited</td>
+      <td align="right">368</td>
+      <td>EIDPARRY.NS</td>
+      <td>EID Parry India Limited</td>
       </tr>
       <tr>
-        <td align="right">369</td>
-        <td>LAXMIMACH.NS</td>
-        <td>Lakshmi Machine Works Limited</td>
+      <td align="right">369</td>
+      <td>LAXMIMACH.NS</td>
+      <td>Lakshmi Machine Works Limited</td>
       </tr>
       <tr>
-        <td align="right">370</td>
-        <td>ALKYLAMINE.NS</td>
-        <td>Alkyl Amines Chemicals Limited</td>
+      <td align="right">370</td>
+      <td>ALKYLAMINE.NS</td>
+      <td>Alkyl Amines Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">371</td>
-        <td>MOIL.NS</td>
-        <td>MOIL Limited</td>
+      <td align="right">371</td>
+      <td>MOIL.NS</td>
+      <td>MOIL Limited</td>
       </tr>
       <tr>
-        <td align="right">372</td>
-        <td>PNCINFRA.NS</td>
-        <td>PNC Infratech Limited</td>
+      <td align="right">372</td>
+      <td>PNCINFRA.NS</td>
+      <td>PNC Infratech Limited</td>
       </tr>
       <tr>
-        <td align="right">373</td>
-        <td>KEI.NS</td>
-        <td>KEI Industries Limited</td>
+      <td align="right">373</td>
+      <td>KEI.NS</td>
+      <td>KEI Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">374</td>
-        <td>LUXIND.NS</td>
-        <td>Lux Industries Limited</td>
+      <td align="right">374</td>
+      <td>LUXIND.NS</td>
+      <td>Lux Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">375</td>
-        <td>HATHWAY.NS</td>
-        <td>Hathway Cable &amp; Datacom Limited</td>
+      <td align="right">375</td>
+      <td>HATHWAY.NS</td>
+      <td>Hathway Cable &amp; Datacom Limited</td>
       </tr>
       <tr>
-        <td align="right">376</td>
-        <td>FLFL.NS</td>
-        <td>Future Lifestyle Fashions Limited</td>
+      <td align="right">376</td>
+      <td>FLFL.NS</td>
+      <td>Future Lifestyle Fashions Limited</td>
       </tr>
       <tr>
-        <td align="right">377</td>
-        <td>IIFL.NS</td>
-        <td>IIFL Finance Limited</td>
+      <td align="right">377</td>
+      <td>IIFL.NS</td>
+      <td>IIFL Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">378</td>
-        <td>IDFC.NS</td>
-        <td>IDFC Limited</td>
+      <td align="right">378</td>
+      <td>IDFC.NS</td>
+      <td>IDFC Limited</td>
       </tr>
       <tr>
-        <td align="right">379</td>
-        <td>CCL.NS</td>
-        <td>CCL Products (India) Limited</td>
+      <td align="right">379</td>
+      <td>CCL.NS</td>
+      <td>CCL Products (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">380</td>
-        <td>GARFIBRES.NS</td>
-        <td>Garware Technical Fibres Limited</td>
+      <td align="right">380</td>
+      <td>GARFIBRES.NS</td>
+      <td>Garware Technical Fibres Limited</td>
       </tr>
       <tr>
-        <td align="right">381</td>
-        <td>MAHSCOOTER.NS</td>
-        <td>Maharashtra Scooters Limited</td>
+      <td align="right">381</td>
+      <td>MAHSCOOTER.NS</td>
+      <td>Maharashtra Scooters Limited</td>
       </tr>
       <tr>
-        <td align="right">382</td>
-        <td>KPRMILL.NS</td>
-        <td>K.P.R. Mill Limited</td>
+      <td align="right">382</td>
+      <td>KPRMILL.NS</td>
+      <td>K.P.R. Mill Limited</td>
       </tr>
       <tr>
-        <td align="right">383</td>
-        <td>JKLAKSHMI.NS</td>
-        <td>JK Lakshmi Cement Limited</td>
+      <td align="right">383</td>
+      <td>JKLAKSHMI.NS</td>
+      <td>JK Lakshmi Cement Limited</td>
       </tr>
       <tr>
-        <td align="right">384</td>
-        <td>TASTYBITE.NS</td>
-        <td>Tasty Bite Eatables Limited</td>
+      <td align="right">384</td>
+      <td>TASTYBITE.NS</td>
+      <td>Tasty Bite Eatables Limited</td>
       </tr>
       <tr>
-        <td align="right">385</td>
-        <td>INDOSTAR.NS</td>
-        <td>IndoStar Capital Finance Limited</td>
+      <td align="right">385</td>
+      <td>INDOSTAR.NS</td>
+      <td>IndoStar Capital Finance Limited</td>
       </tr>
       <tr>
-        <td align="right">386</td>
-        <td>BALRAMCHIN.NS</td>
-        <td>Balrampur Chini Mills Limited</td>
+      <td align="right">386</td>
+      <td>BALRAMCHIN.NS</td>
+      <td>Balrampur Chini Mills Limited</td>
       </tr>
       <tr>
-        <td align="right">387</td>
-        <td>INFIBEAM.NS</td>
-        <td>Infibeam Avenues Limited</td>
+      <td align="right">387</td>
+      <td>INFIBEAM.NS</td>
+      <td>Infibeam Avenues Limited</td>
       </tr>
       <tr>
-        <td align="right">388</td>
-        <td>CDSL.NS</td>
-        <td>Central Depository Services (India) Limited</td>
+      <td align="right">388</td>
+      <td>CDSL.NS</td>
+      <td>Central Depository Services (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">389</td>
-        <td>BHARATRAS.NS</td>
-        <td>Bharat Rasayan Limited</td>
+      <td align="right">389</td>
+      <td>BHARATRAS.NS</td>
+      <td>Bharat Rasayan Limited</td>
       </tr>
       <tr>
-        <td align="right">390</td>
-        <td>WELSPUNIND.NS</td>
-        <td>Welspun India Limited</td>
+      <td align="right">390</td>
+      <td>WELSPUNIND.NS</td>
+      <td>Welspun India Limited</td>
       </tr>
       <tr>
-        <td align="right">391</td>
-        <td>RESPONIND.NS</td>
-        <td>Responsive Industries Limited</td>
+      <td align="right">391</td>
+      <td>RESPONIND.NS</td>
+      <td>Responsive Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">392</td>
-        <td>TRIDENT.NS</td>
-        <td>Trident Limited</td>
+      <td align="right">392</td>
+      <td>TRIDENT.NS</td>
+      <td>Trident Limited</td>
       </tr>
       <tr>
-        <td align="right">393</td>
-        <td>KSCL.NS</td>
-        <td>Kaveri Seed Company Limited</td>
+      <td align="right">393</td>
+      <td>KSCL.NS</td>
+      <td>Kaveri Seed Company Limited</td>
       </tr>
       <tr>
-        <td align="right">394</td>
-        <td>CAPLIPOINT.NS</td>
-        <td>Caplin Point Laboratories Limited</td>
+      <td align="right">394</td>
+      <td>CAPLIPOINT.NS</td>
+      <td>Caplin Point Laboratories Limited</td>
       </tr>
       <tr>
-        <td align="right">395</td>
-        <td>VAKRANGEE.NS</td>
-        <td>Vakrangee Limited</td>
+      <td align="right">395</td>
+      <td>VAKRANGEE.NS</td>
+      <td>Vakrangee Limited</td>
       </tr>
       <tr>
-        <td align="right">396</td>
-        <td>TCIEXP.NS</td>
-        <td>TCI Express Limited</td>
+      <td align="right">396</td>
+      <td>TCIEXP.NS</td>
+      <td>TCI Express Limited</td>
       </tr>
       <tr>
-        <td align="right">397</td>
-        <td>ICRA.NS</td>
-        <td>ICRA Limited</td>
+      <td align="right">397</td>
+      <td>ICRA.NS</td>
+      <td>ICRA Limited</td>
       </tr>
       <tr>
-        <td align="right">398</td>
-        <td>POLYMED.NS</td>
-        <td>Poly Medicure Limited</td>
+      <td align="right">398</td>
+      <td>POLYMED.NS</td>
+      <td>Poly Medicure Limited</td>
       </tr>
       <tr>
-        <td align="right">399</td>
-        <td>CSBBANK.NS</td>
-        <td>CSB Bank Limited</td>
+      <td align="right">399</td>
+      <td>CSBBANK.NS</td>
+      <td>CSB Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">400</td>
-        <td>TCNSBRANDS.NS</td>
-        <td>TCNS Clothing Co. Limited</td>
+      <td align="right">400</td>
+      <td>TCNSBRANDS.NS</td>
+      <td>TCNS Clothing Co. Limited</td>
       </tr>
       <tr>
-        <td align="right">401</td>
-        <td>SHILPAMED.NS</td>
-        <td>Shilpa Medicare Limited</td>
+      <td align="right">401</td>
+      <td>SHILPAMED.NS</td>
+      <td>Shilpa Medicare Limited</td>
       </tr>
       <tr>
-        <td align="right">402</td>
-        <td>ZENSARTECH.NS</td>
-        <td>Zensar Technologies Limited</td>
+      <td align="right">402</td>
+      <td>ZENSARTECH.NS</td>
+      <td>Zensar Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">403</td>
-        <td>HINDCOPPER.NS</td>
-        <td>Hindustan Copper Limited</td>
+      <td align="right">403</td>
+      <td>HINDCOPPER.NS</td>
+      <td>Hindustan Copper Limited</td>
       </tr>
       <tr>
-        <td align="right">404</td>
-        <td>BAJAJCON.NS</td>
-        <td>Bajaj Consumer Care Limited</td>
+      <td align="right">404</td>
+      <td>BAJAJCON.NS</td>
+      <td>Bajaj Consumer Care Limited</td>
       </tr>
       <tr>
-        <td align="right">405</td>
-        <td>INGERRAND.NS</td>
-        <td>Ingersoll Rand (India) Limited</td>
+      <td align="right">405</td>
+      <td>INGERRAND.NS</td>
+      <td>Ingersoll Rand (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">406</td>
-        <td>INDOCO.NS</td>
-        <td>Indoco Remedies Limited</td>
+      <td align="right">406</td>
+      <td>INDOCO.NS</td>
+      <td>Indoco Remedies Limited</td>
       </tr>
       <tr>
-        <td align="right">407</td>
-        <td>NETWORK18.NS</td>
-        <td>Network18 Media &amp; Investments Limited</td>
+      <td align="right">407</td>
+      <td>NETWORK18.NS</td>
+      <td>Network18 Media &amp; Investments Limited</td>
       </tr>
       <tr>
-        <td align="right">408</td>
-        <td>SEQUENT.NS</td>
-        <td>Sequent Scientific Limited</td>
+      <td align="right">408</td>
+      <td>SEQUENT.NS</td>
+      <td>Sequent Scientific Limited</td>
       </tr>
       <tr>
-        <td align="right">409</td>
-        <td>WOCKPHARMA.NS</td>
-        <td>Wockhardt Limited</td>
+      <td align="right">409</td>
+      <td>WOCKPHARMA.NS</td>
+      <td>Wockhardt Limited</td>
       </tr>
       <tr>
-        <td align="right">410</td>
-        <td>JUSTDIAL.NS</td>
-        <td>Just Dial Limited</td>
+      <td align="right">410</td>
+      <td>JUSTDIAL.NS</td>
+      <td>Just Dial Limited</td>
       </tr>
       <tr>
-        <td align="right">411</td>
-        <td>FSL.NS</td>
-        <td>Firstsource Solutions Limited</td>
+      <td align="right">411</td>
+      <td>FSL.NS</td>
+      <td>Firstsource Solutions Limited</td>
       </tr>
       <tr>
-        <td align="right">412</td>
-        <td>TRITURBINE.NS</td>
-        <td>Triveni Turbine Limited</td>
+      <td align="right">412</td>
+      <td>TRITURBINE.NS</td>
+      <td>Triveni Turbine Limited</td>
       </tr>
       <tr>
-        <td align="right">413</td>
-        <td>BEML.NS</td>
-        <td>BEML Limited</td>
+      <td align="right">413</td>
+      <td>BEML.NS</td>
+      <td>BEML Limited</td>
       </tr>
       <tr>
-        <td align="right">414</td>
-        <td>RAIN.NS</td>
-        <td>Rain Industries Limited</td>
+      <td align="right">414</td>
+      <td>RAIN.NS</td>
+      <td>Rain Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">415</td>
-        <td>IRB.NS</td>
-        <td>IRB Infrastructure Developers Limited</td>
+      <td align="right">415</td>
+      <td>IRB.NS</td>
+      <td>IRB Infrastructure Developers Limited</td>
       </tr>
       <tr>
-        <td align="right">416</td>
-        <td>HEG.NS</td>
-        <td>HEG Limited</td>
+      <td align="right">416</td>
+      <td>HEG.NS</td>
+      <td>HEG Limited</td>
       </tr>
       <tr>
-        <td align="right">417</td>
-        <td>MHRIL.NS</td>
-        <td>Mahindra Holidays &amp; Resorts India Limited</td>
+      <td align="right">417</td>
+      <td>MHRIL.NS</td>
+      <td>Mahindra Holidays &amp; Resorts India Limited</td>
       </tr>
       <tr>
-        <td align="right">418</td>
-        <td>IBREALEST.NS</td>
-        <td>Indiabulls Real Estate Limited</td>
+      <td align="right">418</td>
+      <td>IBREALEST.NS</td>
+      <td>Indiabulls Real Estate Limited</td>
       </tr>
       <tr>
-        <td align="right">419</td>
-        <td>MMTC.NS</td>
-        <td>MMTC Limited</td>
+      <td align="right">419</td>
+      <td>MMTC.NS</td>
+      <td>MMTC Limited</td>
       </tr>
       <tr>
-        <td align="right">420</td>
-        <td>GET&amp;D.NS</td>
-        <td>GE T&amp;D India Limited</td>
+      <td align="right">420</td>
+      <td>GET&amp;D.NS</td>
+      <td>GE T&amp;D India Limited</td>
       </tr>
       <tr>
-        <td align="right">421</td>
-        <td>UJJIVAN.NS</td>
-        <td>Ujjivan Financial Services Limited</td>
+      <td align="right">421</td>
+      <td>UJJIVAN.NS</td>
+      <td>Ujjivan Financial Services Limited</td>
       </tr>
       <tr>
-        <td align="right">422</td>
-        <td>TATASTLBSL.NS</td>
-        <td>Tata Steel Bsl Limited</td>
+      <td align="right">422</td>
+      <td>TATASTLBSL.NS</td>
+      <td>Tata Steel Bsl Limited</td>
       </tr>
       <tr>
-        <td align="right">423</td>
-        <td>FMGOETZE.NS</td>
-        <td>Federal-Mogul Goetze (India) Limited.</td>
+      <td align="right">423</td>
+      <td>FMGOETZE.NS</td>
+      <td>Federal-Mogul Goetze (India) Limited.</td>
       </tr>
       <tr>
-        <td align="right">424</td>
-        <td>GNFC.NS</td>
-        <td>Gujarat Narmada Valley Fertilizers and Chemicals Limited</td>
+      <td align="right">424</td>
+      <td>GNFC.NS</td>
+      <td>Gujarat Narmada Valley Fertilizers and Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">425</td>
-        <td>ELGIEQUIP.NS</td>
-        <td>Elgi Equipments Limited</td>
+      <td align="right">425</td>
+      <td>ELGIEQUIP.NS</td>
+      <td>Elgi Equipments Limited</td>
       </tr>
       <tr>
-        <td align="right">426</td>
-        <td>DELTACORP.NS</td>
-        <td>Delta Corp Limited</td>
+      <td align="right">426</td>
+      <td>DELTACORP.NS</td>
+      <td>Delta Corp Limited</td>
       </tr>
       <tr>
-        <td align="right">427</td>
-        <td>SCI.NS</td>
-        <td>Shipping Corporation Of India Limited</td>
+      <td align="right">427</td>
+      <td>SCI.NS</td>
+      <td>Shipping Corporation Of India Limited</td>
       </tr>
       <tr>
-        <td align="right">428</td>
-        <td>LEMONTREE.NS</td>
-        <td>Lemon Tree Hotels Limited</td>
+      <td align="right">428</td>
+      <td>LEMONTREE.NS</td>
+      <td>Lemon Tree Hotels Limited</td>
       </tr>
       <tr>
-        <td align="right">429</td>
-        <td>SONATSOFTW.NS</td>
-        <td>Sonata Software Limited</td>
+      <td align="right">429</td>
+      <td>SONATSOFTW.NS</td>
+      <td>Sonata Software Limited</td>
       </tr>
       <tr>
-        <td align="right">430</td>
-        <td>VARROC.NS</td>
-        <td>Varroc Engineering Limited</td>
+      <td align="right">430</td>
+      <td>VARROC.NS</td>
+      <td>Varroc Engineering Limited</td>
       </tr>
       <tr>
-        <td align="right">431</td>
-        <td>BSOFT.NS</td>
-        <td>BIRLASOFT LIMITED</td>
+      <td align="right">431</td>
+      <td>BSOFT.NS</td>
+      <td>BIRLASOFT LIMITED</td>
       </tr>
       <tr>
-        <td align="right">432</td>
-        <td>SHOPERSTOP.NS</td>
-        <td>Shoppers Stop Limited</td>
+      <td align="right">432</td>
+      <td>SHOPERSTOP.NS</td>
+      <td>Shoppers Stop Limited</td>
       </tr>
       <tr>
-        <td align="right">433</td>
-        <td>ESABINDIA.NS</td>
-        <td>Esab India Limited</td>
+      <td align="right">433</td>
+      <td>ESABINDIA.NS</td>
+      <td>Esab India Limited</td>
       </tr>
       <tr>
-        <td align="right">434</td>
-        <td>VESUVIUS.NS</td>
-        <td>Vesuvius India Limited</td>
+      <td align="right">434</td>
+      <td>VESUVIUS.NS</td>
+      <td>Vesuvius India Limited</td>
       </tr>
       <tr>
-        <td align="right">435</td>
-        <td>MAXINDIA.NS</td>
-        <td>Max India Limited</td>
+      <td align="right">435</td>
+      <td>MAXINDIA.NS</td>
+      <td>Max India Limited</td>
       </tr>
       <tr>
-        <td align="right">436</td>
-        <td>GUJALKALI.NS</td>
-        <td>Gujarat Alkalies and Chemicals Limited</td>
+      <td align="right">436</td>
+      <td>GUJALKALI.NS</td>
+      <td>Gujarat Alkalies and Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">437</td>
-        <td>LAOPALA.NS</td>
-        <td>La Opala RG Limited</td>
+      <td align="right">437</td>
+      <td>LAOPALA.NS</td>
+      <td>La Opala RG Limited</td>
       </tr>
       <tr>
-        <td align="right">438</td>
-        <td>MAHLOG.NS</td>
-        <td>Mahindra Logistics Limited</td>
+      <td align="right">438</td>
+      <td>MAHLOG.NS</td>
+      <td>Mahindra Logistics Limited</td>
       </tr>
       <tr>
-        <td align="right">439</td>
-        <td>WELCORP.NS</td>
-        <td>Welspun Corp Limited</td>
+      <td align="right">439</td>
+      <td>WELCORP.NS</td>
+      <td>Welspun Corp Limited</td>
       </tr>
       <tr>
-        <td align="right">440</td>
-        <td>FAIRCHEM.NS</td>
-        <td>Fairchem Speciality Limited</td>
+      <td align="right">440</td>
+      <td>FAIRCHEM.NS</td>
+      <td>Fairchem Speciality Limited</td>
       </tr>
       <tr>
-        <td align="right">441</td>
-        <td>KARURVYSYA.NS</td>
-        <td>Karur Vysya Bank Limited</td>
+      <td align="right">441</td>
+      <td>KARURVYSYA.NS</td>
+      <td>Karur Vysya Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">442</td>
-        <td>GREAVESCOT.NS</td>
-        <td>Greaves Cotton Limited</td>
+      <td align="right">442</td>
+      <td>GREAVESCOT.NS</td>
+      <td>Greaves Cotton Limited</td>
       </tr>
       <tr>
-        <td align="right">443</td>
-        <td>JSWHL.NS</td>
-        <td>JSW Holdings Limited</td>
+      <td align="right">443</td>
+      <td>JSWHL.NS</td>
+      <td>JSW Holdings Limited</td>
       </tr>
       <tr>
-        <td align="right">444</td>
-        <td>ADVENZYMES.NS</td>
-        <td>Advanced Enzyme Technologies Limited</td>
+      <td align="right">444</td>
+      <td>ADVENZYMES.NS</td>
+      <td>Advanced Enzyme Technologies Limited</td>
       </tr>
       <tr>
-        <td align="right">445</td>
-        <td>SUPRAJIT.NS</td>
-        <td>Suprajit Engineering Limited</td>
+      <td align="right">445</td>
+      <td>SUPRAJIT.NS</td>
+      <td>Suprajit Engineering Limited</td>
       </tr>
       <tr>
-        <td align="right">446</td>
-        <td>SCHNEIDER.NS</td>
-        <td>Schneider Electric Infrastructure Limited</td>
+      <td align="right">446</td>
+      <td>SCHNEIDER.NS</td>
+      <td>Schneider Electric Infrastructure Limited</td>
       </tr>
       <tr>
-        <td align="right">447</td>
-        <td>GRSE.NS</td>
-        <td>Garden Reach Shipbuilders &amp; Engineers Limited</td>
+      <td align="right">447</td>
+      <td>GRSE.NS</td>
+      <td>Garden Reach Shipbuilders &amp; Engineers Limited</td>
       </tr>
       <tr>
-        <td align="right">448</td>
-        <td>RCF.NS</td>
-        <td>Rashtriya Chemicals and Fertilizers Limited</td>
+      <td align="right">448</td>
+      <td>RCF.NS</td>
+      <td>Rashtriya Chemicals and Fertilizers Limited</td>
       </tr>
       <tr>
-        <td align="right">449</td>
-        <td>DHANUKA.NS</td>
-        <td>Dhanuka Agritech Limited</td>
+      <td align="right">449</td>
+      <td>DHANUKA.NS</td>
+      <td>Dhanuka Agritech Limited</td>
       </tr>
       <tr>
-        <td align="right">450</td>
-        <td>PRSMJOHNSN.NS</td>
-        <td>Prism Johnson Limited</td>
+      <td align="right">450</td>
+      <td>PRSMJOHNSN.NS</td>
+      <td>Prism Johnson Limited</td>
       </tr>
       <tr>
-        <td align="right">451</td>
-        <td>NILKAMAL.NS</td>
-        <td>Nilkamal Limited</td>
+      <td align="right">451</td>
+      <td>NILKAMAL.NS</td>
+      <td>Nilkamal Limited</td>
       </tr>
       <tr>
-        <td align="right">452</td>
-        <td>KSB.NS</td>
-        <td>Ksb Limited</td>
+      <td align="right">452</td>
+      <td>KSB.NS</td>
+      <td>Ksb Limited</td>
       </tr>
       <tr>
-        <td align="right">453</td>
-        <td>NAVNETEDUL.NS</td>
-        <td>Navneet Education Limited</td>
+      <td align="right">453</td>
+      <td>NAVNETEDUL.NS</td>
+      <td>Navneet Education Limited</td>
       </tr>
       <tr>
-        <td align="right">454</td>
-        <td>PAPERPROD.NS</td>
-        <td>Huhtamaki PPL Limited</td>
+      <td align="right">454</td>
+      <td>PAPERPROD.NS</td>
+      <td>Huhtamaki PPL Limited</td>
       </tr>
       <tr>
-        <td align="right">455</td>
-        <td>JINDALSAW.NS</td>
-        <td>Jindal Saw Limited</td>
+      <td align="right">455</td>
+      <td>JINDALSAW.NS</td>
+      <td>Jindal Saw Limited</td>
       </tr>
       <tr>
-        <td align="right">456</td>
-        <td>EQUITAS.NS</td>
-        <td>Equitas Holdings Limited</td>
+      <td align="right">456</td>
+      <td>EQUITAS.NS</td>
+      <td>Equitas Holdings Limited</td>
       </tr>
       <tr>
-        <td align="right">457</td>
-        <td>GSFC.NS</td>
-        <td>Gujarat State Fertilizers &amp; Chemicals Limited</td>
+      <td align="right">457</td>
+      <td>GSFC.NS</td>
+      <td>Gujarat State Fertilizers &amp; Chemicals Limited</td>
       </tr>
       <tr>
-        <td align="right">458</td>
-        <td>DEN.NS</td>
-        <td>Den Networks Limited</td>
+      <td align="right">458</td>
+      <td>DEN.NS</td>
+      <td>Den Networks Limited</td>
       </tr>
       <tr>
-        <td align="right">459</td>
-        <td>TCI.NS</td>
-        <td>Transport Corporation of India Limited</td>
+      <td align="right">459</td>
+      <td>TCI.NS</td>
+      <td>Transport Corporation of India Limited</td>
       </tr>
       <tr>
-        <td align="right">460</td>
-        <td>RAYMOND.NS</td>
-        <td>Raymond Limited</td>
+      <td align="right">460</td>
+      <td>RAYMOND.NS</td>
+      <td>Raymond Limited</td>
       </tr>
       <tr>
-        <td align="right">461</td>
-        <td>ALLCARGO.NS</td>
-        <td>Allcargo Logistics Limited</td>
+      <td align="right">461</td>
+      <td>ALLCARGO.NS</td>
+      <td>Allcargo Logistics Limited</td>
       </tr>
       <tr>
-        <td align="right">462</td>
-        <td>ORIENTREF.NS</td>
-        <td>Orient Refractories Limited</td>
+      <td align="right">462</td>
+      <td>ORIENTREF.NS</td>
+      <td>Orient Refractories Limited</td>
       </tr>
       <tr>
-        <td align="right">463</td>
-        <td>FCONSUMER.NS</td>
-        <td>Future Consumer Limited</td>
+      <td align="right">463</td>
+      <td>FCONSUMER.NS</td>
+      <td>Future Consumer Limited</td>
       </tr>
       <tr>
-        <td align="right">464</td>
-        <td>VRLLOG.NS</td>
-        <td>VRL Logistics Limited</td>
+      <td align="right">464</td>
+      <td>VRLLOG.NS</td>
+      <td>VRL Logistics Limited</td>
       </tr>
       <tr>
-        <td align="right">465</td>
-        <td>DBCORP.NS</td>
-        <td>D.B.Corp Limited</td>
+      <td align="right">465</td>
+      <td>DBCORP.NS</td>
+      <td>D.B.Corp Limited</td>
       </tr>
       <tr>
-        <td align="right">466</td>
-        <td>BALMLAWRIE.NS</td>
-        <td>Balmer Lawrie &amp; Company Limited</td>
+      <td align="right">466</td>
+      <td>BALMLAWRIE.NS</td>
+      <td>Balmer Lawrie &amp; Company Limited</td>
       </tr>
       <tr>
-        <td align="right">467</td>
-        <td>ECLERX.NS</td>
-        <td>eClerx Services Limited</td>
+      <td align="right">467</td>
+      <td>ECLERX.NS</td>
+      <td>eClerx Services Limited</td>
       </tr>
       <tr>
-        <td align="right">468</td>
-        <td>JAGRAN.NS</td>
-        <td>Jagran Prakashan Limited</td>
+      <td align="right">468</td>
+      <td>JAGRAN.NS</td>
+      <td>Jagran Prakashan Limited</td>
       </tr>
       <tr>
-        <td align="right">469</td>
-        <td>BSE.NS</td>
-        <td>BSE Limited</td>
+      <td align="right">469</td>
+      <td>BSE.NS</td>
+      <td>BSE Limited</td>
       </tr>
       <tr>
-        <td align="right">470</td>
-        <td>JKPAPER.NS</td>
-        <td>JK Paper Limited</td>
+      <td align="right">470</td>
+      <td>JKPAPER.NS</td>
+      <td>JK Paper Limited</td>
       </tr>
       <tr>
-        <td align="right">471</td>
-        <td>MINDACORP.NS</td>
-        <td>Minda Corporation Limited</td>
+      <td align="right">471</td>
+      <td>MINDACORP.NS</td>
+      <td>Minda Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">472</td>
-        <td>KTKBANK.NS</td>
-        <td>The Karnataka Bank Limited</td>
+      <td align="right">472</td>
+      <td>KTKBANK.NS</td>
+      <td>The Karnataka Bank Limited</td>
       </tr>
       <tr>
-        <td align="right">473</td>
-        <td>MAHSEAMLES.NS</td>
-        <td>Maharashtra Seamless Limited</td>
+      <td align="right">473</td>
+      <td>MAHSEAMLES.NS</td>
+      <td>Maharashtra Seamless Limited</td>
       </tr>
       <tr>
-        <td align="right">474</td>
-        <td>ACCELYA.NS</td>
-        <td>Accelya Solutions India Limited</td>
+      <td align="right">474</td>
+      <td>ACCELYA.NS</td>
+      <td>Accelya Solutions India Limited</td>
       </tr>
       <tr>
-        <td align="right">475</td>
-        <td>SOBHA.NS</td>
-        <td>Sobha Limited</td>
+      <td align="right">475</td>
+      <td>SOBHA.NS</td>
+      <td>Sobha Limited</td>
       </tr>
       <tr>
-        <td align="right">476</td>
-        <td>KIRLOSENG.NS</td>
-        <td>Kirloskar Oil Engines Limited</td>
+      <td align="right">476</td>
+      <td>KIRLOSENG.NS</td>
+      <td>Kirloskar Oil Engines Limited</td>
       </tr>
       <tr>
-        <td align="right">477</td>
-        <td>SUPPETRO.NS</td>
-        <td>Supreme Petrochem Limited</td>
+      <td align="right">477</td>
+      <td>SUPPETRO.NS</td>
+      <td>Supreme Petrochem Limited</td>
       </tr>
       <tr>
-        <td align="right">478</td>
-        <td>SWSOLAR.NS</td>
-        <td>Sterling And Wilson Solar Limited</td>
+      <td align="right">478</td>
+      <td>SWSOLAR.NS</td>
+      <td>Sterling And Wilson Solar Limited</td>
       </tr>
       <tr>
-        <td align="right">479</td>
-        <td>HSCL.NS</td>
-        <td>Himadri Speciality Chemical Limited</td>
+      <td align="right">479</td>
+      <td>HSCL.NS</td>
+      <td>Himadri Speciality Chemical Limited</td>
       </tr>
       <tr>
-        <td align="right">480</td>
-        <td>GAEL.NS</td>
-        <td>Gujarat Ambuja Exports Limited</td>
+      <td align="right">480</td>
+      <td>GAEL.NS</td>
+      <td>Gujarat Ambuja Exports Limited</td>
       </tr>
       <tr>
-        <td align="right">481</td>
-        <td>GREENLAM.NS</td>
-        <td>Greenlam Industries Limited</td>
+      <td align="right">481</td>
+      <td>GREENLAM.NS</td>
+      <td>Greenlam Industries Limited</td>
       </tr>
       <tr>
-        <td align="right">482</td>
-        <td>VENKEYS.NS</td>
-        <td>Venky&#39;s (India) Limited</td>
+      <td align="right">482</td>
+      <td>VENKEYS.NS</td>
+      <td>Venky&#39;s (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">483</td>
-        <td>JSL.NS</td>
-        <td>Jindal Stainless Limited</td>
+      <td align="right">483</td>
+      <td>JSL.NS</td>
+      <td>Jindal Stainless Limited</td>
       </tr>
       <tr>
-        <td align="right">484</td>
-        <td>AARTIDRUGS.NS</td>
-        <td>Aarti Drugs Limited</td>
+      <td align="right">484</td>
+      <td>AARTIDRUGS.NS</td>
+      <td>Aarti Drugs Limited</td>
       </tr>
       <tr>
-        <td align="right">485</td>
-        <td>PSPPROJECT.NS</td>
-        <td>PSP Projects Limited</td>
+      <td align="right">485</td>
+      <td>PSPPROJECT.NS</td>
+      <td>PSP Projects Limited</td>
       </tr>
       <tr>
-        <td align="right">486</td>
-        <td>DIAMONDYD.NS</td>
-        <td>Prataap Snacks Limited</td>
+      <td align="right">486</td>
+      <td>DIAMONDYD.NS</td>
+      <td>Prataap Snacks Limited</td>
       </tr>
       <tr>
-        <td align="right">487</td>
-        <td>NIITLTD.NS</td>
-        <td>NIIT Limited</td>
+      <td align="right">487</td>
+      <td>NIITLTD.NS</td>
+      <td>NIIT Limited</td>
       </tr>
       <tr>
-        <td align="right">488</td>
-        <td>HFCL.NS</td>
-        <td>HFCL Limited</td>
+      <td align="right">488</td>
+      <td>HFCL.NS</td>
+      <td>HFCL Limited</td>
       </tr>
       <tr>
-        <td align="right">489</td>
-        <td>ASHOKA.NS</td>
-        <td>Ashoka Buildcon Limited</td>
+      <td align="right">489</td>
+      <td>ASHOKA.NS</td>
+      <td>Ashoka Buildcon Limited</td>
       </tr>
       <tr>
-        <td align="right">490</td>
-        <td>SOLARA.NS</td>
-        <td>Solara Active Pharma Sciences Limited</td>
+      <td align="right">490</td>
+      <td>SOLARA.NS</td>
+      <td>Solara Active Pharma Sciences Limited</td>
       </tr>
       <tr>
-        <td align="right">491</td>
-        <td>ARVINDFASN.NS</td>
-        <td>Arvind Fashions Limited</td>
+      <td align="right">491</td>
+      <td>ARVINDFASN.NS</td>
+      <td>Arvind Fashions Limited</td>
       </tr>
       <tr>
-        <td align="right">492</td>
-        <td>AHLUCONT.NS</td>
-        <td>Ahluwalia Contracts (India) Limited</td>
+      <td align="right">492</td>
+      <td>AHLUCONT.NS</td>
+      <td>Ahluwalia Contracts (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">493</td>
-        <td>PTC.NS</td>
-        <td>PTC India Limited</td>
+      <td align="right">493</td>
+      <td>PTC.NS</td>
+      <td>PTC India Limited</td>
       </tr>
       <tr>
-        <td align="right">494</td>
-        <td>HGINFRA.NS</td>
-        <td>H.G. Infra Engineering Limited</td>
+      <td align="right">494</td>
+      <td>HGINFRA.NS</td>
+      <td>H.G. Infra Engineering Limited</td>
       </tr>
       <tr>
-        <td align="right">495</td>
-        <td>PRINCEPIPE.NS</td>
-        <td>Prince Pipes And Fittings Limited</td>
+      <td align="right">495</td>
+      <td>PRINCEPIPE.NS</td>
+      <td>Prince Pipes And Fittings Limited</td>
       </tr>
       <tr>
-        <td align="right">496</td>
-        <td>NCC.NS</td>
-        <td>NCC Limited</td>
+      <td align="right">496</td>
+      <td>NCC.NS</td>
+      <td>NCC Limited</td>
       </tr>
       <tr>
-        <td align="right">497</td>
-        <td>FACT.NS</td>
-        <td>Fertilizers and Chemicals Travancore Limited</td>
+      <td align="right">497</td>
+      <td>FACT.NS</td>
+      <td>Fertilizers and Chemicals Travancore Limited</td>
       </tr>
       <tr>
-        <td align="right">498</td>
-        <td>TIDEWATER.NS</td>
-        <td>Tide Water Oil Company (India) Limited</td>
+      <td align="right">498</td>
+      <td>TIDEWATER.NS</td>
+      <td>Tide Water Oil Company (India) Limited</td>
       </tr>
       <tr>
-        <td align="right">499</td>
-        <td>ITDC.NS</td>
-        <td>India Tourism Development Corporation Limited</td>
+      <td align="right">499</td>
+      <td>ITDC.NS</td>
+      <td>India Tourism Development Corporation Limited</td>
       </tr>
       <tr>
-        <td align="right">500</td>
-        <td>APARINDS.NS</td>
-        <td>Apar Industries Limited</td>
+      <td align="right">500</td>
+      <td>APARINDS.NS</td>
+      <td>Apar Industries Limited</td>
       </tr>
-    </tbody>
-  </table>
+      </tbody></table>
 </div>
 
 {% endblock body %}
